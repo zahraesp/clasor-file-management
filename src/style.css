@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "IRANYekanRegular";
+  src: url("../src/assets/font/IRANYekanRegular.ttf");
+}
+
+@font-face {
+  font-family: "IRANYekanMedium";
+  src: url("../src/assets/font/IRANYekanMedium.ttf");
+}
+
+@font-face {
+  font-family: "IRANYekanBold";
+  src: url("../src/assets/font/IRANYekanBold.ttf");
+}
+
+@layer base {
+  html {
+    @apply !mylib-h-full mylib-scroll-smooth;
+  }
+  
+  body {
+    background-color: white;
+    @apply mylib-font-yekan-regular mylib-font-normal;
+  }
+  
+  * {
+    @apply mylib-scroll-smooth;
+  }
+}
+
+.MuiCircularProgress-root {
+  @apply !mylib-hidden;
+}
+
+input.dp__input {
+  direction: rtl !important;
+}
+
+.rdp__modal .eKcXbM {
+  max-height: 100% !important;
+}
+.Toastify__toast--success {
+  @apply mylib-bg-[#c4f1c5]  mylib-p-1;
+}
+.Toastify__toast--error {
+  @apply mylib-bg-[#ffcfcf] mylib-p-1;
+}
+.Toastify__toast-body {
+  @apply mylib-text-sm mylib-text-[#131313];
+}
+.Toastify__close-button {
+  @apply mylib-hidden;
+}
+
+.podspace-folder .MuiBox-root {
+  @apply !mylib-relative;
+}
+
+@layer components {
+  .spinner {
+    @apply mylib-border-r-purple-300 mylib-border-t-violet-600 mylib-border-solid mylib-border-4 mylib-rounded-full mylib-animate-spin mylib-w-5 mylib-h-5 mylib-inline-block;
+  }
+  .textarea {
+    @apply mylib-p-2 mylib-min-h-0 mylib-h-auto mylib-rounded;
+  }
+
+  label {
+    @apply mylib-text-sm mylib-text-gray-500 mylib-font-yekan-regular mylib-font-normal;
+  }
+  .input,
+  .select {
+    @apply mylib-bg-transparent mylib-px-[15px] mylib-py-[9px] mylib-rounded-[4px] focus:mylib-px-[15px] focus:mylib-outline-none mylib-text-[13px] mylib-font-yekan-regular mylib-font-normal mylib-text-[#131313] placeholder:mylib-text-[#B9B9B9] mylib-w-full;
+  }
+
+  .select {
+    background-image: url("data:image/svg+xml;utf8,<svg width='10' height='7' viewBox='0 0 10 7' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1.175 0.149902L5 3.9749L8.825 0.149902L10 1.33324L5 6.33324L0 1.33324L1.175 0.149902Z' fill='rgb(145,145,145)'/></svg>");
+    background-position-x: 15px;
+    background-size: 10px;
+    @apply mylib-rounded-sm mylib-bg-no-repeat mylib-appearance-none;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+  .title {
+    @apply mylib-font-yekan-regular mylib-font-normal mylib-text-lg mylib-text-[#131313];
+  }
+
+  .progressBar {
+    @apply mylib-z-50 mylib-bg-white mylib-left-8 mylib-w-full mylib-flex mylib-justify-center mylib-items-center mylib-bottom-10 mylib-shadow-md mylib-rounded-md mylib-flex-col mylib-max-w-[285px];
+  }
+  .dialog-content__modal {
+    @apply mylib-z-[10000];
+  }
+
+  .btn {
+    @apply mylib-rounded-[4px] mylib-py-[11px] mylib-px-3 mylib-h-fit mylib-font-yekan-medium mylib-font-normal mylib-text-[13px] mylib-min-h-fit mylib-outline-none mylib-border-none;
+  }
+  .btn:active:hover,
+  .btn:active:focus {
+    @apply mylib-transform-none;
+  }
+
+  .bg-primary {
+    @apply mylib-bg-[#7446B2];
+  }
+
+  .custom-table {
+    @apply mylib-text-right mylib-rounded-[4px];
+  }
+  .custom-table th {
+    @apply mylib-text-[13px] mylib-font-yekan-bold mylib-text-[#919191] mylib-sticky mylib-top-0 mylib-bg-white mylib-z-10 mylib-cursor-default;
+  }
+  .custom-table td {
+    @apply mylib-text-sm mylib-font-yekan-regular mylib-text-[#919191];
+  }
+  .custom-table :is(th, td) {
+    @apply mylib-px-5 mylib-py-4 mylib-border-b-[1px] mylib-border-b-gray-200 mylib-font-yekan-regular;
+  }
+  .custom-table td.actions {
+    @apply mylib-p-0;
+  }
+
+  .custom-table tr td:first-child {
+    @apply mylib-relative;
+  }
+
+  .custom-table tr:focus-within td {
+    @apply mylib-text-[#7446B2];
+  }
+  .custom-table tr:focus-within td:first-child::before {
+    @apply mylib-block;
+  }
+  .custom-table tr :is(td, th):last-child {
+    @apply mylib-text-left;
+  }
+
+  .modal {
+    background-color: transparent !important;
+  }
+
+  .dialog-content__modal {
+    @apply mylib-z-[10000];
+  }
+
+  .modal-box {
+    @apply mylib-rounded-lg mylib-w-full mylib-bg-white mylib-p-5;
+  }
+  .modal-title {
+    @apply mylib-text-base mylib-font-yekan-regular mylib-font-normal;
+  }
+  .modal-action > :not([hidden]) ~ :not([hidden]) {
+    @apply mylib-m-0;
+  }
+  .modal-action {
+    @apply mylib-items-center mylib-gap-x-[10px];
+  }
+  .modal-action .modal-btn-success,
+  .modal-btn-success {
+    @apply mylib-leading-[22px] mylib-bg-[#7446B2] hover:mylib-bg-[#7446B2] mylib-px-[23px] mylib-py-[9px] mylib-text-white;
+  }
+  .modal-action .modal-btn-cancel {
+    @apply mylib-bg-transparent mylib-text-[#7446B2] hover:mylib-bg-[#7446B2]  hover:mylib-text-white mylib-leading-[22px] mylib-px-[19px] mylib-py-[9px];
+  }
+
+  .tab-lifted.tab-active {
+    @apply mylib-bg-[#0A0A0A];
+  }
+  .tabs-boxed {
+    @apply mylib-bg-transparent mylib-rounded-none mylib-border-b-[1px] mylib-border-b-gray-300 mylib-p-0 mylib-pt-4;
+  }
+  .tabs-boxed .tab {
+    @apply mylib-block mylib-text-sm mylib-font-yekan-medium mylib-font-normal mylib-rounded-none mylib-text-[#919191] mylib-leading-4 mylib-px-[15px];
+  }
+  .tabs-boxed .tab-active {
+    @apply !mylib-bg-transparent !mylib-text-[#7446B2] hover:mylib-text-[#7446B2] mylib-border-b-[2px] !mylib-border-b-[#7446B2] -mylib-mb-[1px];
+  }
+}
+
+@layer utilities {
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply mylib-rounded-full mylib-bg-[#919191];
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply mylib-rounded-full mylib-bg-gray-300 mylib-border;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
+  }
+}
