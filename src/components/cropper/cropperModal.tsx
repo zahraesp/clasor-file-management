@@ -94,7 +94,7 @@ const CropperModal = (props: IProps) => {
     <div
       role="button"
       tabIndex={0}
-      className="dialog-content__modal mylib-modal mylib-cursor-default mylib-modal-open mylib-h-full"
+      className="dialog-content__modal cls-modal cls-cursor-default !cls-w-full cls-modal-open cls-h-full"
     >
       <div
         onClick={(e) => {
@@ -102,60 +102,59 @@ const CropperModal = (props: IProps) => {
         }}
         role="button"
         tabIndex={-1}
-        className="file-management__cropper-modal mylib-modal-box mylib-p-0 mylib-overflow-hidden mylib-text-right mylib-cursor-default mylib-h-auto"
+        className="file-management__cropper-modal cls-modal-box cls-max-w-[32rem] cls-bg-white !cls-w-full cls-p-0 cls-overflow-hidden cls-text-right cls-cursor-default cls-h-auto"
       >
-        <div className="mylib-overflow-auto mylib-modal-box mylib-h-full mylib-flex mylib-flex-col mylib-justify-between">
-            <div className="mylib-flex mylib-flex-wrap mylib-items-center">
-              <h3 className="mylib-modal-title">ویرایش عکس</h3>
-              <button
-                className="mylib-w-fit mylib-mr-auto"
-                onClick={close}
-                disabled={isLoading}
-              >
-                <XIcon className="mylib-fill-[#919191] mylib-w-4 mylib-h-4" />
-              </button>
-            </div>
-            <div className="mylib-flex mylib-flex-col mylib-items-center mylib-mt-[30px]">
-              <RenderIf isTrue={!!cropMode}>
-                <ImageCropper
-                  localImage={localImage}
-                  setCroppedImage={setCroppedImage}
-                />
-              </RenderIf>
-              <ImageCompressor
-                cropMode={cropMode}
+        <div className="cls-overflow-auto cls-modal-box cls-max-w-[32rem] cls-bg-white !cls-w-full cls-h-full cls-flex cls-flex-col cls-justify-between">
+          <div className="cls-flex cls-flex-wrap cls-items-center">
+            <h3 className="cls-modal-title">ویرایش عکس</h3>
+            <button
+              className="cls-w-fit cls-mr-auto"
+              onClick={close}
+              disabled={isLoading}
+            >
+              <XIcon className="cls-fill-[#919191] cls-w-4 cls-h-4" />
+            </button>
+          </div>
+          <div className="cls-flex cls-flex-col cls-items-center cls-mt-[30px]">
+            <RenderIf isTrue={!!cropMode}>
+              <ImageCropper
                 localImage={localImage}
-                setLocalImage={setLocalImage}
-                compressValue={compressValue}
-                setCompressValue={setCompressValue}
+                setCroppedImage={setCroppedImage}
               />
-              {showProgress && (
-                <div className="progressBar mylib-mt-4">
-                  <div className="mylib-flex mylib-items-center">
-                    <progress
-                      className="mylib-progress progress-[#4488C7] mylib-w-56"
-                      value={processCount}
-                      max="100"
-                    />
-                    <span className="mylib-mr-2">{processCount}</span>
-                  </div>
+            </RenderIf>
+            <ImageCompressor
+              cropMode={cropMode}
+              localImage={localImage}
+              setLocalImage={setLocalImage}
+              compressValue={compressValue}
+              setCompressValue={setCompressValue}
+            />
+            {showProgress && (
+              <div className="upload-file__progressBar lib-progressBar !cls-bg-white">
+                <div className="cls-flex cls-items-center">
+                  <progress
+                     className="cls-progress cls-progress-success cls-w-56"
+                    value={processCount}
+                    max="100"
+                  />
+                  <span className="cls-mr-2">{processCount}</span>
                 </div>
-              )}
-            </div>
-          <div className="dialog-content__action-part mylib-modal-action mylib-mt-6">
+              </div>
+            )}
+          </div>
+          <div className="dialog-content__action-part lib-modal-action cls-modal-action cls-mt-[30px]">
             {isLoading ? (
               <div className="spinner" />
             ) : (
               <button
-                className="dialog-content__submit mylib-btn modal-btn-success"
+                className="dialog-content__submit cls-btn lib-btn lib-modal-btn-success"
                 onClick={handleSubmit}
               >
                 تایید
               </button>
             )}
-
             <button
-              className="dialog-content__btns mylib-btn modal-btn-cancel"
+              className="dialog-content__btns lib-btn cls-btn lib-modal-btn-cancel"
               type="button"
               onClick={close}
               disabled={isLoading}

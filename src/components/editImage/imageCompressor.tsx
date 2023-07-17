@@ -53,10 +53,10 @@ const ImageCompressor = (props: IProps) => {
   };
 
   return (
-    <div className="file-management__compress-image mylib-w-full">
+    <div className="file-management__compress-image cls-w-full">
       <RenderIf isTrue={!cropMode}>
-        <div className="mylib-w-full mylib-max-h-48 mylib-h-[12rem] mylib-flex mylib-justify-center mylib-items-center">
-          <div className="mylib-w-full mylib-max-h-full mylib-overflow-y-auto">
+        <div className="cls-w-full cls-max-h-48 cls-h-[12rem] cls-flex cls-justify-center cls-items-center">
+          <div className="cls-w-full cls-max-h-full cls-overflow-y-auto">
             <img
               src={
                 localImage?.compressedImage
@@ -64,18 +64,18 @@ const ImageCompressor = (props: IProps) => {
                   : localImage?.imageAddress
               }
               alt="پیش نمایش عکس"
-              className="mylib-h-full mylib-w-full"
+              className="cls-h-full cls-w-full"
             />
           </div>
         </div>
       </RenderIf>
 
-      <div className="form-control mylib-my-5 mylib-w-full">
-        <label className="label mylib-cursor-pointer mylib-justify-start mylib-p-0">
+      <div className="form-control cls-my-5 cls-w-full">
+        <label className="label cls-cursor-pointer cls-justify-start cls-p-0">
           <input
             type="checkbox"
             checked={hasCompressor}
-            className="mylib-absolute mylib-accent-gray-800 mylib-cursor-pointer mylib-ml-[10px] mylib-checkbox-xs"
+            className="cls-absolute cls-accent-gray-800 cls-cursor-pointer cls-ml-[10px] cls-checkbox-xs"
             onChange={() => {
               setHasCompressor((oldState) => {
                 return !oldState;
@@ -90,7 +90,7 @@ const ImageCompressor = (props: IProps) => {
               setCompressValue(0);
             }}
           />
-          <span className="mylib-checkbox-text checkbox-text mylib-mr-5">فشرده سازی عکس</span>
+          <span className="cls-checkbox-text checkbox-text cls-mr-5">فشرده سازی عکس</span>
         </label>
       </div>
       <RenderIf isTrue={hasCompressor}>
@@ -100,12 +100,12 @@ const ImageCompressor = (props: IProps) => {
             min="0"
             max="1"
             value={compressValue}
-            className="range"
+            className="cls-range cls-appearance-none cls-bg-transparent cls-w-full cls-overflow-hidden"
             step="0.1"
             dir="ltr"
             onChange={handleChangeSlider}
           />
-          <div className="mylib-w-full mylib-flex mylib-justify-between mylib-text-xs mylib-px-2">
+          <div className="cls-w-full cls-flex cls-justify-between cls-text-xs cls-px-2">
             <span>100</span>
             <span>90</span>
             <span>80</span>

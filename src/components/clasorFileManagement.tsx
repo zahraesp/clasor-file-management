@@ -60,27 +60,27 @@ export const ClasorFileManagement = (props: IProps) => {
   } | null>(null);
 
   return (
-    <div className="file-management-wrapper mylib-h-full mylib-w-full mylib-flex mylib-flex-col">
+    <div className="file-management-wrapper cls-h-full cls-w-full cls-flex cls-flex-col">
       {!!cardMode && (
-        <div className="mylib-flex mylib-h-fit mylib-flex-wrap mylib-items-center">
-          <div className="mylib-flex mylib-w-full mylib-items-center mylib-justify-end mylib-gap-2">
+        <div className="cls-flex cls-h-fit cls-flex-wrap cls-items-center">
+          <div className="cls-flex cls-w-full cls-items-center cls-justify-end cls-gap-2">
             <button
-              className="mylib-btn mylib-bg-[#7446B2] hover:mylib-bg-[#7446B2] mylib-text-white"
+              className="lib-btn cls-bg-[#7446B2] hover:cls-bg-[#7446B2] cls-text-white"
               onClick={() => {
                 setUiMode("card");
               }}
             >
-              <GridIcon className="mylib-w-4 mylib-h-4" />
+              <GridIcon className="cls-w-4 cls-h-4" />
             </button>
             <button
-              className="mylib-btn mylib-bg-[#7446B2] hover:mylib-bg-[#7446B2] mylib-text-white"
+              className="cls-btn lib-btn cls-bg-[#7446B2] hover:cls-bg-[#7446B2] cls-text-white"
               onClick={() => {
                 setUiMode("table");
               }}
             >
-              <TableIcon className="mylib-w-4 mylib-h-4" />
+              <TableIcon className="cls-w-4 cls-h-4" />
             </button>
-            <div className="file-management__upload-file mylib-self-end">
+            <div className="file-management__upload-file cls-self-end">
               <UploadFile
                 onUploadFile={onUploadFile}
                 showCropper={showCropper}
@@ -94,7 +94,7 @@ export const ClasorFileManagement = (props: IProps) => {
           </div>
         </div>
       )}
-      <div className="file-management__file-list mylib-flex mylib-flex-col mylib-flex-grow mylib-max-h-full mylib-h-[calc(100%-50px)] mylib-pt-5">
+      <div className="file-management__file-list cls-flex cls-flex-col cls-flex-grow cls-max-h-full cls-h-[calc(100%-50px)] cls-pt-5">
         <RenderIf isTrue={uiMode === "table"}>
           <TableMode
             files={files}
@@ -121,7 +121,7 @@ export const ClasorFileManagement = (props: IProps) => {
         </RenderIf>
       </div>
       {!cardMode && (
-        <div className="file-management__upload-file dialog-content__action-part mylib-modal-action mylib-mt-2 mylib-self-end">
+        <div className="file-management__upload-file dialog-content__action-part cls-modal-action cls-mt-2 cls-self-end">
           <UploadFile
             onUploadFile={onUploadFile}
             showCropper={showCropper}

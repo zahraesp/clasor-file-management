@@ -62,65 +62,67 @@ const TableMode = (props: ITableProps) => {
   }, [page]);
 
   return (
-    <div className="mylib-flex mylib-flex-col mylib-flex-grow mylib-overflow-auto">
+    <div className="cls-flex cls-flex-col cls-flex-grow cls-overflow-auto">
       <div
-        className={`mylib-overflow-auto mylib-bg-white mylib-rounded-[4px] mylib-max-h-[320px] mylib-h-[170px] mylib-flex-grow mylib-block ${
-          isFetching ? "mylib-grid" : "mylib-block"
+        className={`cls-overflow-auto cls-bg-white cls-rounded-[4px] cls-flex-grow cls-block ${
+          isFetching ? "cls-grid" : "cls-block"
         }`}
       >
         {!isFetching ? (
           searchlist?.length ? (
-            <table className="file-list__table custom-table mylib-table-fixed mylib-w-full">
+            <table className="file-list__table custom-table cls-table-fixed cls-w-full">
               <thead>
                 <tr className="">
-                  <th className="mylib-sticky mylib-top-0 mylib-bg-white mylib-z-10 ">
-                    <div className="mylib-flex">
-                      <span className="mylib-block">نام فایل</span>
-                      <div className="mylib-flex mylib-flex-col mylib-mr-[11px]">
+                  <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10 cls-font-normal ">
+                    <div className="cls-flex">
+                      <span className="cls-block cls-font-bold">نام فایل</span>
+                      <div className="cls-flex cls-flex-col cls-items-center cls-mr-[11px]">
                         <button
-                          className="mylib-btn btn-up !mylib-p-0 mylib-bg-transparent hover:mylib-bg-transparent"
+                          className="btn-up !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
                           onClick={() => {
                             return setSortByName(-1);
                           }}
                         >
-                          <FillArrow className="mylib-w-[9px] mylib-h-[9px] mylib-fill-[#B9B9B9]" />
+                          <FillArrow className="cls-w-[9px] cls-h-[9px] cls-fill-[#B9B9B9]" />
                         </button>
                         <button
-                          className="btn-down !mylib-p-0 mylib-bg-transparent hover:mylib-bg-transparent"
+                          className="btn-down !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
                           onClick={() => {
                             return setSortByName(1);
                           }}
                         >
-                          <FillArrow className="mylib-w-[9px] mylib-h-[9px] mylib-fill-[#B9B9B9] mylib-rotate-180" />
+                          <FillArrow className="cls-w-[9px] cls-h-[9px] cls-fill-[#B9B9B9] cls-rotate-180" />
                         </button>
                       </div>
                     </div>
                   </th>
-                  <th className="mylib-sticky mylib-top-0 mylib-bg-white mylib-z-10">
-                    <div className="mylib-flex">
-                      <span className="mylib-block">تاریخ آپلود</span>
+                  <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">
+                    <div className="cls-flex">
+                      <span className="cls-block">تاریخ آپلود</span>
                     </div>
                   </th>
-                  <th className="mylib-sticky mylib-top-0 mylib-bg-white mylib-z-10">حجم</th>
-                  <th className="mylib-sticky mylib-top-0 mylib-bg-white mylib-z-10">عملیات</th>
+                  <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">حجم</th>
+                  <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">عملیات</th>
                 </tr>
               </thead>
               <tbody>
                 {searchlist?.map((item: IFile) => {
                   const link = generateDownloadLink?.(item);
+                  const fileSizeInKB = item.size / 1000;
+                  const fileSizeInMB = fileSizeInKB / 1000;
                   return (
                     <tr
                       tabIndex={0}
                       key={JSON.stringify(item)}
-                      className="hover:mylib-bg-sky-100 hover:mylib-cursor-pointer"
+                      className="hover:cls-bg-sky-100 hover:cls-cursor-pointer"
                       onClick={() => {
                         setOpenPreviewFile(true);
                         return onSelect?.(item);
                       }}
                     >
                       <td>
-                        <div className="mylib-flex mylib-items-center">
-                          <div className="mylib-w-8 mylib-h-8 mylib-inline-block">
+                        <div className="cls-flex cls-items-center">
+                          <div className="cls-w-8 cls-h-8 cls-inline-block">
                             <FileIcon
                               extension={item.extension}
                               {...defaultStyles[
@@ -130,7 +132,7 @@ const TableMode = (props: ITableProps) => {
                               labelColor={getColor(item.extension || "")}
                             />
                           </div>
-                          <span className="mylib-block mylib-text-xs mylib-font-yekan-regular mylib-font-normal mylib-text-[#919191] mylib-mr-[10px] mylib-truncate">
+                          <span className="cls-block cls-text-xs cls-font-yekan-regular cls-font-normal cls-text-[#919191] cls-mr-[10px] cls-truncate">
                             {`${item.name || ""}.${
                               item.extension ? item.extension : ""
                             }`}
@@ -138,30 +140,34 @@ const TableMode = (props: ITableProps) => {
                         </div>
                       </td>
                       <td>
-                        <span className="mylib-px-3 mylib-py-[5px] mylib-font-yekan-medium mylib-text-xs mylib-text-[#919191] ">
+                        <span className="cls-px-3 cls-py-[5px] cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
                           {FaDateFromTimestamp(item.updated)}
                         </span>
                       </td>
                       <td>
-                        <span className="mylib-px-3 mylib-py-[5px]  mylib-font-yekan-medium mylib-text-xs mylib-text-[#919191] ">
-                          {`${item.size} کیلوبایت`}
+                        <span className="cls-px-3 cls-py-[5px]  cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
+                          <span className="cls-text-xs cls-text-right">
+                            {fileSizeInKB < 1000
+                              ? `${fileSizeInKB.toFixed(2)} کیلوبایت`
+                              : `${fileSizeInMB.toFixed(2)} مگابایت`}
+                          </span>{" "}
                         </span>
                       </td>
                       <td>
-                        <div className="file-table__actions mylib-h-8 mylib-flex mylib-gap-x-[21px] mylib-justify-end">
+                        <div className="file-table__actions cls-h-8 cls-flex !cls-gap-x-[21px] cls-justify-end">
                           <div className="download-file">
                             {/* <RenderIf isTrue={!!link}> */}
-                              <div className="mylib-btn mylib-p-0 mylib-bg-transparent hover:mylib-bg-transparent">
-                                <a
-                                  href={link}
-                                  download
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                  }}
-                                >
-                                  <DownloadIcon className="mylib-h-5 mylib-w-5 mylib-stroke-[#0D99FF]" />
-                                </a>
-                              </div>
+                            <div className="lib-btn !cls-p-0 cls-bg-transparent hover:cls-bg-transparent">
+                              <a
+                                href={link}
+                                download
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                }}
+                              >
+                                <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#0D99FF]" />
+                              </a>
+                            </div>
                             {/* </RenderIf> */}
                           </div>
                           <RenameFile
@@ -182,13 +188,13 @@ const TableMode = (props: ITableProps) => {
               </tbody>
             </table>
           ) : (
-            <div className="file-list custom-table empty-table mylib-flex mylib-justify-center mylib-mt-4 mylib-table-fixed mylib-w-full">
+            <div className="file-list custom-table empty-table cls-flex cls-justify-center cls-mt-4 cls-table-fixed cls-w-full">
               فایلی برای نمایش وجود ندارد.
             </div>
           )
         ) : (
           <div
-            className="spinner mylib-self-center mylib-justify-center"
+            className="spinner cls-self-center cls-justify-center"
             style={{
               justifySelf: "center",
             }}
@@ -197,7 +203,7 @@ const TableMode = (props: ITableProps) => {
       </div>
       <div
         dir="ltr"
-        className="file-list__table file-list__pagination mylib-w-full mylib-h-fit mylib-bg-cover mylib-mt-[30px] mylib-text-left mylib-flex mylib-justify-end"
+        className="file-list__table file-list__pagination cls-w-full cls-h-fit cls-bg-cover cls-mt-[30px] cls-text-left cls-flex cls-justify-end"
       >
         {files ? (
           <Pagination

@@ -78,28 +78,28 @@ export const Pagination = (props: IProps) => {
   };
 
   return (
-    <div className="mylib-flex pagination">
-      <div className="mylib-flex mylib-text-xs mylib-w-[60px] mylib-justify-around mylib-bg-[#fff] mylib-mr-5 mylib-items-center mylib-drop-shadow-[0px_2px_3px_rgba(0,0,0,0.07)] mylib-rounded-[4px] mylib-overflow-hidden">
+    <div className="cls-flex pagination">
+      <div className="cls-flex cls-text-xs cls-w-[60px] cls-justify-around cls-bg-[#fff] cls-mr-5 cls-items-center cls-drop-shadow-[0px_2px_3px_rgba(0,0,0,0.07)] cls-rounded-[4px] cls-overflow-hidden">
         <span>{pageList.length}</span>
         <span>از</span>
         <span>{currectPage + 1}</span>
       </div>
-      <div className="pagination mylib-flex mylib-items-center mylib-w-fit mylib-bg-white mylib-drop-shadow-[0px_2px_3px_rgba(0,0,0,0.07)] mylib-rounded-[4px] mylib-overflow-hidden">
+      <div className="pagination cls-flex cls-items-center cls-w-fit cls-bg-white cls-drop-shadow-[0px_2px_3px_rgba(0,0,0,0.07)] cls-rounded-[4px] cls-overflow-hidden">
         <button
           disabled={!pageList[currectPage]}
           onClick={handlePrev}
-          className="mylib-btn mylib-bg-transparent hover:mylib-bg-transparent mylib-p-[10px] mylib-text-xs disabled:mylib-bg-transparent"
+          className="cls-btn lib-btn cls-bg-transparent hover:cls-bg-transparent cls-p-[10px] cls-text-xs disabled:cls-bg-transparent"
         >
           <ChevronLeftIcon
-            className={`mylib-w-3 mylib-h-3 mylib-stroke-[#919191] ${
-              !pageList[currectPage] ? "mylib-stroke-gray-300" : ""
+            className={`cls-w-3 cls-h-3 cls-stroke-[#919191] ${
+              !pageList[currectPage] ? "cls-stroke-gray-300" : ""
             }`}
           />
         </button>
         {currectPage - 3 > 0 && (
           <>
             <button
-              className="mylib-btn mylib-bg-transparent hover:mylib-bg-transparent mylib-py-[10px] mylib-px-3 mylib-text-[#131313]"
+              className="cls-btn lib-btn cls-bg-transparent hover:cls-bg-transparent cls-py-[10px] cls-px-3 cls-text-[#131313]"
               onClick={() => {
                 handlePage(0);
               }}
@@ -113,7 +113,7 @@ export const Pagination = (props: IProps) => {
         {getBefore(pageList, currectPage).map((item) => {
           return (
             <button
-              className="mylib-btn mylib-bg-transparent hover:mylib-bg-transparent mylib-py-[10px] mylib-px-3 mylib-text-[#131313]"
+              className="cls-btn lib-btn cls-bg-transparent hover:cls-bg-transparent cls-py-[10px] cls-px-3 cls-text-[#131313]"
               onClick={() => {
                 handlePage(item);
               }}
@@ -123,13 +123,13 @@ export const Pagination = (props: IProps) => {
             </button>
           );
         })}
-        <button className="mylib-btn mylib-bg-[#7446B2] hover:mylib-bg-transparent mylib-py-[10px] mylib-px-3 mylib-text-[#fff] hover:mylib-text-[#7446B2]">
+        <button className="cls-btn lib-btn cls-bg-[#7446B2] hover:cls-bg-transparent cls-py-[10px] cls-px-3 cls-text-[#fff] hover:cls-text-[#7446B2]">
           {currectPage + 1}
         </button>
         {getNext(pageList, currectPage).map((item) => {
           return (
             <button
-              className="mylib-btn mylib-bg-transparent hover:mylib-bg-transparent mylib-py-[10px] mylib-px-3 mylib-text-[#131313]"
+              className="cls-btn lib-btn cls-bg-transparent hover:cls-bg-transparent cls-py-[10px] cls-px-3 cls-text-[#131313]"
               onClick={() => {
                 handlePage(item);
               }}
@@ -144,7 +144,7 @@ export const Pagination = (props: IProps) => {
           <>
             {pageList.length !== currectPage + 4 && <span>...</span>}
             <button
-              className="mylib-btn mylib-bg-transparent hover:mylib-bg-transparent mylib-py-[10px] mylib-px-3 mylib-text-[#131313]"
+              className="cls-btn lib-btn cls-bg-transparent hover:cls-bg-transparent cls-py-[10px] cls-px-3 cls-text-[#131313]"
               onClick={() => {
                 handlePage(pageList.length - 1);
               }}
@@ -156,11 +156,11 @@ export const Pagination = (props: IProps) => {
         <button
           disabled={!pageList[currectPage + 1]}
           onClick={handleNext}
-          className="mylib-btn mylib-bg-transparent hover:mylib-bg-transparent mylib-p-[10px] mylib-text-xs disabled:mylib-bg-transparent"
+          className="cls-btn lib-btn cls-bg-transparent hover:cls-bg-transparent cls-p-[10px] cls-text-xs disabled:cls-bg-transparent"
         >
           <ChevronRightIcon
-            className={`mylib-w-3 mylib-h-3 mylib-stroke-[#919191] ${
-              !pageList[currectPage + 1] ? "mylib-stroke-gray-300" : ""
+            className={`cls-w-3 cls-h-3 cls-stroke-[#919191] ${
+              !pageList[currectPage + 1] ? "cls-stroke-gray-300" : ""
             }`}
           />
         </button>

@@ -60,7 +60,7 @@ const PreviewFileModal = ({
     <div
       role="button"
       tabIndex={0}
-      className="dialog-content__modal mylib-modal mylib-cursor-default mylib-modal-open mylib-h-full"
+      className="dialog-content__modal cls-modal cls-cursor-default !cls-w-full cls-modal-open cls-h-full"
       onClick={close}
     >
       <div
@@ -69,34 +69,34 @@ const PreviewFileModal = ({
         }}
         role="button"
         tabIndex={-1}
-        className="file-management__delete-modal mylib-modal-box mylib-p-0 mylib-overflow-hidden mylib-text-right mylib-cursor-default mylib-mt-10"
+        className="file-management__delete-modal cls-modal-box cls-max-w-[32rem] cls-bg-white !cls-w-full cls-p-0 cls-overflow-hidden cls-text-right cls-cursor-default cls-mt-10"
       >
-        <div className=" mylib-overflow-auto mylib-modal-box mylib-h-96">
-          <div className="mylib-flex mylib-flex-wrap mylib-items-center">
+        <div className=" cls-overflow-auto cls-modal-box cls-max-w-[32rem] cls-bg-white !cls-w-full cls-h-96">
+          <div className="cls-flex cls-flex-wrap cls-items-center">
             <h3 className="modal-title">پیش نمایش فایل</h3>
-            <button className="mylib-w-fit mylib-mr-auto" onClick={close}>
-              <XIcon className="mylib-fill-[#919191] mylib-w-4 mylib-h-4" />
+            <button className="cls-w-fit cls-mr-auto" onClick={close}>
+              <XIcon className="cls-fill-[#919191] cls-w-4 cls-h-4" />
             </button>
           </div>
 
-          <div className="mylib-mt-[30px] mylib-flex mylib-justify-center">
+          <div className="cls-mt-[30px] cls-flex cls-justify-center">
             <RenderIf isTrue={format === "image"}>
-              <img className="mylib-w-full" src={source} alt={selectedFile?.name} />
+              <img className="cls-w-full" src={source} alt={selectedFile?.name} />
             </RenderIf>
             <RenderIf isTrue={format === "video"}>
-              <video className="mylib-w-full" controls>
+              <video className="cls-w-full" controls>
                 <source src={source} type="video/mp4" />
                 مرورگر شما از ویدئو پشتیبانی نمیکند
               </video>
             </RenderIf>
             <RenderIf isTrue={format === "sound"}>
-              <audio className="mylib-w-full" controls>
+              <audio className="cls-w-full" controls>
                 <source src={source} type="audio/mpeg" />
                 مرورگر شما از صدا پشتیبانی نمیکند
               </audio>
             </RenderIf>
             <RenderIf isTrue={format === "notSupported"}>
-              <p className="mylib-mb-4">فرمت مورد نظر فاقد پیش نمایش میباشد</p>
+              <p className="cls-mb-4">فرمت مورد نظر فاقد پیش نمایش میباشد</p>
             </RenderIf>
           </div>
         </div>

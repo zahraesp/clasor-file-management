@@ -51,19 +51,19 @@ const RenameFile = (props: IProps) => {
   return (
     <div className="file-management__edit">
       <button
-        className=" dialog-content__button mylib-btn mylib-p-0 mylib-bg-transparent mylib-hover:bg-transparent"
+        className="dialog-content__button lib-btn !cls-p-0 cls-bg-transparent cls-hover:bg-transparent"
         onClick={(e) => {
           e.stopPropagation();
           handleClose();
         }}
       >
-        <PencilIcon className="dialog-content__button-icon mylib-h-5 mylib-w-5 mylib-fill-[#0D99FF]" />
+        <PencilIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#0D99FF]" />
       </button>
       <div
         role="button"
         tabIndex={0}
-        className={` dialog-content__modal mylib-modal mylib-cursor-default  ${
-          open ? "mylib-modal-open" : ""
+        className={` dialog-content__modal cls-modal !cls-w-full cls-cursor-default  ${
+          open ? "cls-modal-open" : ""
         }`}
         onClick={() => {
           return setOpen(false);
@@ -75,23 +75,23 @@ const RenameFile = (props: IProps) => {
           }}
           role="button"
           tabIndex={-1}
-          className="file-management__edit-modal mylib-modal-box mylib-p-0 mylib-overflow-hidden mylib-text-right mylib-cursor-default"
+          className="file-management__edit-modal cls-modal-box cls-max-w-[32rem] cls-bg-white !cls-w-full cls-p-0 cls-overflow-hidden cls-text-right cls-cursor-default"
         >
-          <div className="mylib-overflow-auto mylib-modal-box">
-            <div className="mylib-flex mylib-flex-wrap mylib-items-center">
-              <h3 className="mylib-modal-title">ویرایش نام فایل</h3>
+          <div className="cls-overflow-auto cls-modal-box cls-max-w-[32rem] cls-bg-white !cls-w-full">
+            <div className="cls-flex cls-flex-wrap cls-items-center">
+              <h3 className="lib-modal-title">ویرایش نام فایل</h3>
               <button
-                className="mylib-w-fit mylib-mr-auto"
+                className="cls-w-fit cls-mr-auto"
                 onClick={() => {
                   handleClose();
                 }}
               >
-                <XIcon className="mylib-fill-[#919191] mylib-w-4 mylib-h-4" />
+                <XIcon className="cls-fill-[#919191] cls-w-4 cls-h-4" />
               </button>
             </div>
 
             <form
-              className="dialog-content__form mylib-mt-[30px] mylib-flex mylib-flex-col"
+              className="dialog-content__form cls-mt-[30px] cls-flex cls-flex-col"
               onSubmit={handleSubmit(onSubmit)}
             >
               <label htmlFor="file-rename-id">نام جدید</label>
@@ -102,27 +102,27 @@ const RenameFile = (props: IProps) => {
                 })}
                 type="text"
                 placeholder="نام جدید فایل را وارد کنید"
-                className="dialog-content__Input mylib-input mylib-input-bordered input input-bordered mylib-w-full mylib-mt-[10px]"
+                className="dialog-content__Input cls-input cls-input-bordered input input-bordered cls-w-full cls-mt-[10px]"
               />
               {errors?.newName && (
-                <small className="dialog-content__errorText mylib-text-[#F56C6C] mylib-text-sm mylib-w-full mylib-h-5 mylib-block mylib-mt-3">
+                <small className="dialog-content__errorText cls-text-[#F56C6C] cls-text-sm cls-w-full cls-h-5 cls-block cls-mt-3">
                   {errors?.newName?.message}
                 </small>
               )}
 
-              <div className="dialog-content__action-part mylib-modal-action mylib-mt-[30px]">
+              <div className="dialog-content__action-part lib-modal-action cls-modal-action cls-mt-[30px]">
                 {isLoading ? (
                   <div className="spinner" />
                 ) : (
                   <>
                     <button
-                      className="dialog-content__submit mylib-btn modal-btn-success"
+                      className="dialog-content__submit cls-btn lib-btn lib-modal-btn-success"
                       type="submit"
                     >
                       ارسال
                     </button>
                     <button
-                      className="dialog-content__btns mylib-btn modal-btn-cancel"
+                      className="dialog-content__btns lib-btn cls-btn lib-modal-btn-cancel"
                       type="button"
                       onClick={handleClose}
                     >

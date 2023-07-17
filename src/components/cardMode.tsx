@@ -46,33 +46,35 @@ const CardMode = (props: ITableProps) => {
 
   return (
     <>
-      <div className="file-list__card mylib-overflow-auto mylib-bg-white mylib-rounded-[4px] mylib-max-h-[320px] mylib-h-[170px]">
+      <div className="file-list__card cls-overflow-auto cls-bg-white cls-rounded-[4px]">
         <div
-          className={`mylib-grid mylib-grid-cols-1 ${
-            !isFetching && "sm:mylib-grid-cols-2 md:mylib-grid-cols-4 lg:mylib-grid-cols-5"
-          } mylib-gap-4 mylib-py-10 mylib-p-5 mylib-flex-wrap mylib-bg-white mylib-min-h-[320px]`}
+          className={`cls-grid cls-grid-cols-1 ${
+            !isFetching && "sm:cls-grid-cols-2 md:cls-grid-cols-3 lg:cls-grid-cols-4"
+          } cls-gap-4 cls-py-10 cls-p-5 cls-flex-wrap cls-bg-white `}
         >
           {!isFetching ? (
             files?.list?.map((item: IFile) => {
               const link = generateDownloadLink?.(item);
+              const fileSizeInKB = item.size / 1000;
+              const fileSizeInMB = fileSizeInKB / 1000;
               return (
                 <article
                   onClick={() => {
                     setOpenPreviewFile(true);
                     onSelect(item);
                   }}
-                  className="mylib-card mylib-pb-5 mylib-shadow-lg mylib-cursor-pointer"
+                  className="cls-card cls-pb-5 cls-shadow-lg cls-cursor-pointer"
                   key={`card-${item.hash}`}
                 >
-                  <figure className="card-image mylib-h-[200px]">
+                  <figure className="card-image cls-h-[200px]">
                     {item.thumbnail !== "WITHOUT_THUMBNAIL" ? (
                       <img
-                        className="mylib-w-full mylib-h-[200px] mylib-object-cover"
+                        className="cls-w-full cls-h-[200px] cls-object-cover"
                         alt={item.name}
                         src={link}
                       />
                     ) : (
-                      <div className="mylib-w-[100px] mylib-h-auto">
+                      <div className="cls-w-[100px] cls-h-auto">
                         <FileIcon
                           extension={item.extension}
                           {...defaultStyles[
@@ -84,21 +86,23 @@ const CardMode = (props: ITableProps) => {
                       </div>
                     )}
                   </figure>
-                  <div className="card-content mylib-px-6 mylib-flex mylib-flex-col mylib-gap-y-2 mylib-mt-2">
-                    <h6 className="mylib-text-lg mylib-font-yekan-bold mylib-text-right mylib-truncate">
+                  <div className="card-content cls-px-6 cls-flex cls-flex-col cls-gap-y-2 cls-mt-2">
+                    <h6 className="cls-text-lg cls-font-yekan-bold cls-text-right cls-truncate">
                       {item.name}
                     </h6>
                     <span
-                      className="mylib-text-sm mylib-truncate mylib-text-right"
+                      className="cls-text-sm cls-truncate cls-text-right"
                       title={FaDateFromTimestamp(item.updated)}
                     >
                       تاریخ آپلود :{FaDateFromTimestamp(item.updated)}
                     </span>
-                    <span className="mylib-text-xs mylib-text-right">
-                      حجم :{`${item.size} کیلوبایت`}
+                    <span className="cls-text-xs cls-text-right">
+                      حجم: {fileSizeInKB < 1000 ? 
+                      `${(fileSizeInKB).toFixed(2)} کیلوبایت` :
+                      `${(fileSizeInMB).toFixed(2)} مگابایت`  }
                     </span>
                   </div>
-                  <div className="card-action mylib-pt-2 mylib-px-6 mylib-flex mylib-gap-2 mylib-justify-end">
+                  <div className="card-action cls-pt-2 cls-px-6 cls-flex cls-gap-2 cls-justify-end">
                     <div className="download-file">
                       <RenderIf isTrue={!!link}>
                         <a
@@ -108,7 +112,7 @@ const CardMode = (props: ITableProps) => {
                             e.stopPropagation();
                           }}
                         >
-                          <DownloadIcon className="mylib-h-5 mylib-w-5 mylib-stroke-[#0D99FF]" />
+                          <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#0D99FF]" />
                         </a>
                       </RenderIf>
                     </div>
@@ -128,7 +132,7 @@ const CardMode = (props: ITableProps) => {
             })
           ) : (
             <div
-              className="spinner mylib-self-center"
+              className="spinner cls-self-center"
               style={{
                 justifySelf: "center",
               }}
@@ -138,7 +142,7 @@ const CardMode = (props: ITableProps) => {
       </div>
       <div
         dir="ltr"
-        className="file-list__card file-list__pagination mylib-w-full mylib-h-fit mylib-bg-cover mylib-mt-[30px] mylib-text-left mylib-flex mylib-justify-end"
+        className="file-list__card file-list__pagination cls-w-full cls-h-fit cls-bg-cover cls-mt-[30px] cls-text-left cls-flex cls-justify-end"
       >
         {files ? (
           <Pagination

@@ -28,19 +28,19 @@ const DeleteFile = (props: IProps) => {
   return (
     <div className="file-management__delete">
       <button
-        className="dialog-content__button mylib-btn mylib-p-0 mylib-bg-transparent hover:mylib-bg-transparent"
+        className="dialog-content__button lib-btn !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
         onClick={(e) => {
           e.stopPropagation();
           return setOpen(true);
         }}
       >
-        <TrashIcon className="dialog-content__button-icon mylib-h-5 mylib-w-5 mylib-fill-[#F56C6C]" />
+        <TrashIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#F56C6C]" />
       </button>
       <div
         role="button"
         tabIndex={0}
-        className={`dialog-content__modal mylib-modal mylib-cursor-default  ${
-          open ? "mylib-modal-open" : ""
+        className={`dialog-content__modal !cls-w-full cls-modal cls-cursor-default  ${
+          open ? "cls-modal-open" : ""
         }`}
         onClick={() => {
           return setOpen(false);
@@ -52,41 +52,41 @@ const DeleteFile = (props: IProps) => {
           }}
           role="button"
           tabIndex={-1}
-          className="file-management__delete-modal  mylib-modal-box mylib-p-0 mylib-overflow-hidden mylib-text-right mylib-cursor-default"
+          className="file-management__delete-modal !cls-w-full cls-max-w-[32rem] cls-bg-white cls-modal-box cls-p-0 cls-overflow-hidden cls-text-right cls-cursor-default"
         >
-          <div className="mylib-overflow-auto mylib-modal-box">
-            <div className="mylib-flex mylib-flex-wrap mylib-items-center">
-              <h3 className="mylib-modal-title">حذف فایل</h3>
+          <div className="cls-overflow-auto !cls-w-full cls-max-w-[32rem] cls-bg-white cls-modal-box">
+            <div className="cls-flex cls-flex-wrap cls-items-center">
+              <h3 className="lib-modal-title">حذف فایل</h3>
               <button
-                className="mylib-w-fit mylib-mr-auto"
+                className="cls-w-fit cls-mr-auto"
                 onClick={() => {
                   handleClose();
                 }}
               >
-                <XIcon className="mylib-fill-[#919191] mylib-w-4 mylib-h-4" />
+                <XIcon className="cls-fill-[#919191] cls-w-4 cls-h-4" />
               </button>
             </div>
-            <div className="mylib-flex mylib-items-center mylib-mt-[30px]">
-              <p className="mylib-text-[#919191]">
+            <div className="cls-flex cls-items-center cls-mt-[30px]">
+              <p className="cls-text-[#919191]">
                 {`
             آیا از حذف فایل ${fileInfo.name} مطمئن هستید؟
             `}
               </p>
             </div>
 
-            <div className="dialog-content__action-part mylib-modal-action mylib-mt-[30px]">
+            <div className="dialog-content__action-part lib-modal-action cls-modal-action cls-mt-[30px]">
               {isLoading ? (
                 <div className="spinner" />
               ) : (
                 <>
                   <button
-                    className="dialog-content__submit mylib-btn modal-btn-success"
+                    className="dialog-content__submit cls-btn lib-btn lib-modal-btn-success"
                     onClick={handleDelete}
                   >
                     تایید
                   </button>
                   <button
-                    className="dialog-content__btns mylib-btn modal-btn-cancel"
+                    className="dialog-content__btns lib-btn cls-btn lib-modal-btn-cancel"
                     type="button"
                     onClick={handleClose}
                   >

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import ReactCrop, { Crop } from "react-image-crop";
 import { ILocalImage } from "../../interface";
+import "react-image-crop/dist/ReactCrop.css";
 
 type NewBlob<T> = Partial<T> & { name: string };
 
@@ -79,7 +80,7 @@ const ImageCropper = ({ localImage, setCroppedImage }: IProps) => {
   };
 
   return (
-    <div className="mylib-max-h-72 mylib-overflow-y-auto">
+    <div className="cls-max-h-72 cls-overflow-y-auto">
       <ReactCrop
         keepSelection
         crop={cropConfig}

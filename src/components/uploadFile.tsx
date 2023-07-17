@@ -99,29 +99,29 @@ const UploadFile = ({
       ref={formRef}
     >
       {uploadClick ? (
-        <div className="upload-file__progressBar progressBar">
-          <p className="mylib-w-full mylib-ml-2 mylib-bg-emerald-200 mylib-text-xs mylib-flex mylib-pr-2 mylib-items-center">
-            <span className="spinner mylib-ml-2 mylib-mr-1" />
+        <div className="upload-file__progressBar lib-progressBar !cls-bg-white">
+          <p className=" cls-color-emerald-200 color-emerald-200 cls-w-full cls-ml-2 cls-text-xs cls-flex cls-pr-2 cls-items-center">
+            <span className="spinner cls-ml-2 cls-mr-1" />
             <span>{textStatus}</span>
           </p>
-          <div className="mylib-flex mylib-items-center">
+          <div className="cls-flex cls-items-center">
             <progress
-              className="mylib-progress mylib-bg-[#71A13D] mylib-w-56"
+              className="cls-progress cls-progress-success cls-w-56"
               value={processCount}
               max="100"
             />
-            <span className="mylib-mr-2">{processCount}%</span>
+            <span className="cls-mr-2">{processCount}%</span>
           </div>
         </div>
       ) : (
         <>
           <label
             htmlFor="file-upload"
-            className="dialog-content__submit mylib-btn mylib-bg-[#7446B2] mylib-flex mylib-items-center modal-btn-success "
+            className="dialog-content__submit lib-btn cls-btn cls-bg-[#7446B2] hover:cls-bg-[#7446B2]"
           >
             <i className="fa fa-cloud-upload" />
-            <UploadFileIcon className="mylib-h-4 mylib-w-4 mylib-fill-white mylib-ml-2" />
-            <span className="mylib-text-white">
+            <UploadFileIcon className="cls-h-4 cls-w-4 cls-fill-white cls-ml-2 " />
+            <span className="cls-text-white cls-font-normal">
             بارگذاری فایل
             </span>
           </label>
