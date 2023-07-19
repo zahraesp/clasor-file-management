@@ -183,3 +183,17 @@ export const UploadFileIcon = (props: IProps) => {
     </svg>
   );
 };
+
+export const FolderIcon = (props: IProps) => {
+  const { className } = props;
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 21 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M1.99988 14H8.99988V16H1.99988C0.899878 16 -0.00012207 15.11 -0.00012207 14V2C-0.00012207 0.89 0.889878 0 1.99988 0H7.99988L9.99988 2H17.9999C19.0999 2 19.9999 2.89 19.9999 4V6.17L18.4099 4.59L17.9999 4.17V4H1.99988V14ZM20.9999 10V17C20.9999 18.11 20.1099 19 18.9999 19H12.9999C11.8999 19 10.9999 18.11 10.9999 17V8C10.9999 6.9 11.8999 6 12.9999 6H16.9999L20.9999 10ZM18.9999 11H15.9999V8H12.9999V17H18.9999V11Z" />
+    </svg>
+  );
+};

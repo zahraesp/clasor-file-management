@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IFile } from "../interface";
+import { IBreadcrumb, IFile, IFolder } from "../interface";
 import { GridIcon, TableIcon } from "../assets/svg";
 import UploadFile from "./uploadFile";
 import RenderIf from "../extra/renderIf";
@@ -7,11 +7,13 @@ import TableMode from "./tableMode";
 import CardMode from "./cardMode";
 import CropperModal from "./cropper/cropperModal";
 import PropTypes from "prop-types";
+import Breadcrumb from "./breadcrumb";
 
 export interface IProps {
   files?: {
     list: IFile[];
     count: number;
+    breadcrumb?: IBreadcrumb[];
   };
   cardMode?: boolean;
   cropMode?: boolean;
@@ -20,7 +22,7 @@ export interface IProps {
   isError?: boolean;
   hasPreview?: boolean;
   processCount?: number;
-  onSelectFile?: (file: IFile) => void;
+  onSelectFile?: (file: IFile | IFolder | IBreadcrumb) => void;
   onChangePage?: (page: number) => void;
   onRenameFile?: (file: IFile, newName: string) => void;
   onDeleteFile?: (file: IFile) => void;
@@ -80,21 +82,30 @@ export const ClasorFileManagement = (props: IProps) => {
             >
               <TableIcon className="cls-w-4 cls-h-4" />
             </button>
-            <div className="file-management__upload-file cls-self-end">
-              <UploadFile
-                onUploadFile={onUploadFile}
-                showCropper={showCropper}
-                setShowCropper={setShowCropper}
-                setLocalImage={setLocalImage}
-                processCount={processCount}
-                isLoading={isLoading}
-                isError={isError}
-              />
-            </div>
+
+            <RenderIf isTrue={!!onUploadFile}>
+              <div className="file-management__upload-file cls-self-end">
+                <UploadFile
+                  onUploadFile={onUploadFile}
+                  showCropper={showCropper}
+                  setShowCropper={setShowCropper}
+                  setLocalImage={setLocalImage}
+                  processCount={processCount}
+                  isLoading={isLoading}
+                  isError={isError}
+                />
+              </div>
+            </RenderIf>
           </div>
         </div>
       )}
       <div className="file-management__file-list cls-flex cls-flex-col cls-flex-grow cls-max-h-full cls-h-[calc(100%-50px)] cls-pt-5">
+        <RenderIf isTrue={!!files?.breadcrumb?.length}>
+          <Breadcrumb
+            breadcrumbList={files?.breadcrumb!}
+            onSelectFile={onSelectFile}
+          />
+        </RenderIf>
         <RenderIf isTrue={uiMode === "table"}>
           <TableMode
             files={files}
@@ -113,6 +124,7 @@ export const ClasorFileManagement = (props: IProps) => {
             files={files}
             isFetching={isFetching}
             isLoading={isLoading}
+            onSelectFile={onSelectFile}
             onChangePage={onChangePage}
             onRenameFile={onRenameFile}
             onDeleteFile={onDeleteFile}
