@@ -14,6 +14,7 @@ export interface ITableProps {
     list: (IFile | IFolder)[];
     count: number;
   };
+  pageSize?: number;
   isFetching?: boolean;
   isLoading?: boolean;
   hasPreview?: boolean;
@@ -23,11 +24,11 @@ export interface ITableProps {
   onDeleteFile?: (file: IFile) => void;
   generateDownloadLink?: (file: IFile) => string;
 }
-const fileTablePageSize = 20;
 
 const TableMode = (props: ITableProps) => {
   const {
     files,
+    pageSize,
     isLoading,
     isFetching,
     hasPreview,
@@ -130,7 +131,7 @@ const TableMode = (props: ITableProps) => {
                       key={JSON.stringify(item)}
                       className="hover:cls-bg-sky-100 hover:cls-cursor-pointer"
                       onClick={() => {
-                        if (!isFolder(item)) {
+                        if (hasPreview && !isFolder(item)) {
                           setOpenPreviewFile(true);
                         }
                         return onSelect?.(item);
@@ -243,7 +244,7 @@ const TableMode = (props: ITableProps) => {
           <Pagination
             changePage={page}
             total={files.count}
-            pageSize={fileTablePageSize}
+            pageSize={pageSize}
             onChange={setPage}
           />
         ) : null}

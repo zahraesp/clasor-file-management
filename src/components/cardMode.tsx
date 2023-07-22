@@ -10,11 +10,10 @@ import { DownloadIcon, FolderIcon } from "../assets/svg";
 import PreviewFileModal from "./previewModal";
 import RenderIf from "../extra/renderIf";
 
-const fileTablePageSize = 20;
-
 const CardMode = (props: ITableProps) => {
   const {
     files,
+    pageSize,
     isFetching,
     isLoading,
     onDeleteFile,
@@ -71,7 +70,7 @@ const CardMode = (props: ITableProps) => {
                 return (
                   <article
                     onClick={() => {
-                      if (!isFolder(item)) {
+                      if (hasPreview && !isFolder(item)) {
                         setOpenPreviewFile(true);
                       }
                       onSelect(item);
@@ -185,7 +184,7 @@ const CardMode = (props: ITableProps) => {
           <Pagination
             changePage={page}
             total={files.count}
-            pageSize={fileTablePageSize}
+            pageSize={pageSize}
             onChange={setPage}
           />
         ) : null}

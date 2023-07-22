@@ -15,6 +15,7 @@ export interface IProps {
     count: number;
     breadcrumb?: IBreadcrumb[];
   };
+  pageSize?: number;
   cardMode?: boolean;
   cropMode?: boolean;
   isFetching?: boolean;
@@ -35,6 +36,7 @@ type IUiMode = "card" | "table";
 export const ClasorFileManagement = (props: IProps) => {
   const {
     files,
+    pageSize,
     cardMode,
     cropMode,
     isLoading,
@@ -100,7 +102,7 @@ export const ClasorFileManagement = (props: IProps) => {
         </div>
       )}
       <div className="file-management__file-list cls-flex cls-flex-col cls-flex-grow cls-max-h-full cls-h-[calc(100%-50px)] cls-pt-5">
-        <RenderIf isTrue={!!files?.breadcrumb?.length}>
+        <RenderIf isTrue={!!files?.breadcrumb?.length && files.breadcrumb.length > 1}>
           <Breadcrumb
             breadcrumbList={files?.breadcrumb!}
             onSelectFile={onSelectFile}
@@ -109,6 +111,7 @@ export const ClasorFileManagement = (props: IProps) => {
         <RenderIf isTrue={uiMode === "table"}>
           <TableMode
             files={files}
+            pageSize={pageSize}
             hasPreview={hasPreview}
             isFetching={isFetching}
             isLoading={isLoading}
@@ -122,6 +125,7 @@ export const ClasorFileManagement = (props: IProps) => {
         <RenderIf isTrue={uiMode === "card"}>
           <CardMode
             files={files}
+            pageSize={pageSize}
             isFetching={isFetching}
             isLoading={isLoading}
             onSelectFile={onSelectFile}

@@ -1,5 +1,5 @@
 import moment from "moment-jalaali";
-import { IFile, IFolder } from "../interface";
+import { IBreadcrumb, IFile, IFolder } from "../interface";
 
 export const toPersinaDigit = (digits: number | string): string => {
   const fa = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
@@ -62,6 +62,6 @@ export const getColor = (type: string) => {
   return "#4C3575";
 };
 
-export const isFolder = (item: IFile | IFolder): item is IFolder => {
-  return item.type === "application/vnd.podspace.folder";
+export const isFolder = (item: IFile | IFolder | IBreadcrumb): item is IFolder => {
+  return ("type" in item && item.type === "application/vnd.podspace.folder") || !("thumbnail" in item) ;
 }

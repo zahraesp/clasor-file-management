@@ -7,7 +7,7 @@ interface IProps {
 
 const Breadcrumb = ({ breadcrumbList, onSelectFile }: IProps) => {
   return (
-    <nav>
+    <nav className="cls-mb-4">
       <ul className="file-manager-breadcrumb cls-flex cls-gap-2 cls-items-center">
         {breadcrumbList.reverse().map((breadItem, index) => {
           return (

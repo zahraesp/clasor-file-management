@@ -3,13 +3,13 @@ import { ChevronLeftIcon, ChevronRightIcon } from "../../assets/svg";
 
 interface IProps {
   total: number;
-  pageSize: number;
+  pageSize?: number;
   onChange: (page: number) => void;
   changePage?: number;
 }
 
 export const Pagination = (props: IProps) => {
-  const { total, pageSize, onChange, changePage } = props;
+  const { total, pageSize = 5, onChange, changePage } = props;
 
   const [currectPage, setCurrectPage] = useState(1);
 
