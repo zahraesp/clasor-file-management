@@ -1,32 +1,34 @@
 import { useEffect, useState } from "react";
-import { IFile } from "../interface";
-import { DownloadIcon, FillArrow } from "../assets/svg";
+import { IFile, IFolder } from "../interface";
+import { DownloadIcon, FillArrow, FolderIcon } from "../assets/svg";
 import Pagination from "../extra/pagination";
 import { DefaultExtensionType, defaultStyles, FileIcon } from "react-file-icon";
-import { FaDateFromTimestamp, getColor } from "../utils";
+import { FaDateFromTimestamp, getColor, isFolder } from "../utils";
 import DeleteFile from "./deleteFile";
 import RenameFile from "./renameFile";
 import PreviewFileModal from "./previewModal";
+import RenderIf from "../extra/renderIf";
 
 export interface ITableProps {
   files?: {
-    list: IFile[];
+    list: (IFile | IFolder)[];
     count: number;
   };
+  pageSize?: number;
   isFetching?: boolean;
   isLoading?: boolean;
   hasPreview?: boolean;
-  onSelectFile?: (file: IFile) => void;
+  onSelectFile?: (file: IFile | IFolder) => void;
   onChangePage?: (page: number) => void;
   onRenameFile?: (file: IFile, newName: string) => void;
   onDeleteFile?: (file: IFile) => void;
   generateDownloadLink?: (file: IFile) => string;
 }
-const fileTablePageSize = 20;
 
 const TableMode = (props: ITableProps) => {
   const {
     files,
+    pageSize,
     isLoading,
     isFetching,
     hasPreview,
@@ -52,8 +54,10 @@ const TableMode = (props: ITableProps) => {
     return 0;
   });
 
-  const onSelect = (file: IFile) => {
-    setSelectedFile(file);
+  const onSelect = (file: IFile | IFolder) => {
+    if (!isFolder(file)) {
+      setSelectedFile(file);
+    }
     onSelectFile?.(file);
   };
 
@@ -65,7 +69,7 @@ const TableMode = (props: ITableProps) => {
     <div className="cls-flex cls-flex-col cls-flex-grow cls-overflow-auto">
       <div
         className={`cls-overflow-auto cls-bg-white cls-rounded-[4px] cls-flex-grow cls-block ${
-          isFetching ? "cls-grid" : "cls-block"
+          isFetching ? "cls-grid cls-min-h-16" : "cls-block"
         }`}
       >
         {!isFetching ? (
@@ -101,86 +105,117 @@ const TableMode = (props: ITableProps) => {
                       <span className="cls-block">تاریخ آپلود</span>
                     </div>
                   </th>
-                  <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">حجم</th>
-                  <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">عملیات</th>
+                  <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">
+                    حجم
+                  </th>
+                  <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">
+                    عملیات
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {searchlist?.map((item: IFile) => {
-                  const link = generateDownloadLink?.(item);
-                  const fileSizeInKB = item.size / 1000;
-                  const fileSizeInMB = fileSizeInKB / 1000;
+                {searchlist?.map((item) => {
+                  const link = !isFolder(item)
+                    ? generateDownloadLink?.(item)
+                    : undefined;
+                  const fileSizeInKB = !isFolder(item)
+                    ? item.size / 1000
+                    : undefined;
+                  const fileSizeInMB =
+                    !isFolder(item) && fileSizeInKB
+                      ? fileSizeInKB / 1000
+                      : undefined;
                   return (
                     <tr
                       tabIndex={0}
                       key={JSON.stringify(item)}
                       className="hover:cls-bg-sky-100 hover:cls-cursor-pointer"
                       onClick={() => {
-                        setOpenPreviewFile(true);
+                        if (hasPreview && !isFolder(item)) {
+                          setOpenPreviewFile(true);
+                        }
                         return onSelect?.(item);
                       }}
                     >
                       <td>
                         <div className="cls-flex cls-items-center">
                           <div className="cls-w-8 cls-h-8 cls-inline-block">
-                            <FileIcon
-                              extension={item.extension}
-                              {...defaultStyles[
-                                item.extension as unknown as DefaultExtensionType
-                              ]}
-                              glyphColor={getColor(item.extension || "")}
-                              labelColor={getColor(item.extension || "")}
-                            />
+                            {!isFolder(item) ? (
+                              <FileIcon
+                                extension={item.extension}
+                                {...defaultStyles[
+                                  item.extension as unknown as DefaultExtensionType
+                                ]}
+                                glyphColor={getColor(item.extension || "")}
+                                labelColor={getColor(item.extension || "")}
+                              />
+                            ) : (
+                              <FolderIcon className="cls-fill-[#DC7611] cls-w-8 cls-h-8" />
+                            )}
                           </div>
                           <span className="cls-block cls-text-xs cls-font-yekan-regular cls-font-normal cls-text-[#919191] cls-mr-[10px] cls-truncate">
-                            {`${item.name || ""}.${
-                              item.extension ? item.extension : ""
+                            {`${item.name || ""}${
+                              item.extension && !isFolder(item)
+                                ? `.${item.extension}`
+                                : ""
                             }`}
                           </span>
                         </div>
                       </td>
                       <td>
-                        <span className="cls-px-3 cls-py-[5px] cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
-                          {FaDateFromTimestamp(item.updated)}
-                        </span>
+                        {!isFolder(item) ? (
+                          <span className="cls-px-3 cls-py-[5px] cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
+                            {FaDateFromTimestamp(item.updated)}
+                          </span>
+                        ) : null}
                       </td>
                       <td>
                         <span className="cls-px-3 cls-py-[5px]  cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
-                          <span className="cls-text-xs cls-text-right">
-                            {fileSizeInKB < 1000
-                              ? `${fileSizeInKB.toFixed(2)} کیلوبایت`
-                              : `${fileSizeInMB.toFixed(2)} مگابایت`}
-                          </span>{" "}
+                          {!isFolder(item) && fileSizeInKB ? (
+                            <span className="cls-text-xs cls-text-right">
+                              {fileSizeInKB < 1000
+                                ? `${fileSizeInKB.toFixed(2)} کیلوبایت`
+                                : `${fileSizeInMB?.toFixed(2)} مگابایت`}
+                            </span>
+                          ) : null}
                         </span>
                       </td>
                       <td>
-                        <div className="file-table__actions cls-h-8 cls-flex !cls-gap-x-[21px] cls-justify-end">
-                          <div className="download-file">
-                            {/* <RenderIf isTrue={!!link}> */}
-                            <div className="lib-btn !cls-p-0 cls-bg-transparent hover:cls-bg-transparent">
-                              <a
-                                href={link}
-                                download
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                }}
-                              >
-                                <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#0D99FF]" />
-                              </a>
+                        {!isFolder(item) ? (
+                          <div className="file-table__actions cls-h-8 cls-flex !cls-gap-x-[21px] cls-justify-end">
+                            <div className="download-file">
+                              <RenderIf isTrue={!!link}>
+                              <div className="lib-btn !cls-p-0 cls-bg-transparent hover:cls-bg-transparent">
+                                <a
+                                  href={link}
+                                  download
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                  }}
+                                >
+                                  <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#0D99FF]" />
+                                </a>
+                              </div>
+                              </RenderIf>
                             </div>
-                            {/* </RenderIf> */}
+
+                            <RenderIf isTrue={!!onRenameFile}>
+                              <RenameFile
+                                fileInfo={item}
+                                onRenameFile={onRenameFile}
+                                isLoading={isLoading}
+                              />
+                            </RenderIf>
+
+                            <RenderIf isTrue={!!onDeleteFile}>
+                              <DeleteFile
+                                fileInfo={item}
+                                onDeleteFile={onDeleteFile}
+                                isLoading={isLoading}
+                              />
+                            </RenderIf>
                           </div>
-                          <RenameFile
-                            fileInfo={item}
-                            onRenameFile={onRenameFile}
-                            isLoading={isLoading}
-                          />
-                          <DeleteFile
-                            fileInfo={item}
-                            onDeleteFile={onDeleteFile}
-                            isLoading={isLoading}
-                          />
-                        </div>
+                        ) : null}
                       </td>
                     </tr>
                   );
@@ -188,7 +223,7 @@ const TableMode = (props: ITableProps) => {
               </tbody>
             </table>
           ) : (
-            <div className="file-list custom-table empty-table cls-flex cls-justify-center cls-mt-4 cls-table-fixed cls-w-full">
+            <div className="file-list custom-table empty-table cls-min-h-16 cls-flex cls-justify-center cls-mt-4 cls-table-fixed cls-w-full">
               فایلی برای نمایش وجود ندارد.
             </div>
           )
@@ -209,7 +244,7 @@ const TableMode = (props: ITableProps) => {
           <Pagination
             changePage={page}
             total={files.count}
-            pageSize={fileTablePageSize}
+            pageSize={pageSize}
             onChange={setPage}
           />
         ) : null}
