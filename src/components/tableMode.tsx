@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IFile, IFolder } from "../interface";
+import { IFile, IFolder, IReport } from "../interface";
 import { DownloadIcon, FillArrow, FolderIcon } from "../assets/svg";
 import Pagination from "../extra/pagination";
 import { DefaultExtensionType, defaultStyles, FileIcon } from "react-file-icon";
@@ -8,8 +8,11 @@ import DeleteFile from "./deleteFile";
 import RenameFile from "./renameFile";
 import PreviewFileModal from "./previewModal";
 import RenderIf from "../extra/renderIf";
+import ProgressBar from "../extra/progressBar";
 
 export interface ITableProps {
+  dataReport?: IReport;
+  fetchingReport?: boolean;
   files?: {
     list: (IFile | IFolder)[];
     count: number;
@@ -27,6 +30,8 @@ export interface ITableProps {
 
 const TableMode = (props: ITableProps) => {
   const {
+    dataReport,
+    fetchingReport,
     files,
     pageSize,
     isLoading,
@@ -241,12 +246,17 @@ const TableMode = (props: ITableProps) => {
         className="file-list__table file-list__pagination cls-w-full cls-h-fit cls-bg-cover cls-mt-[30px] cls-text-left cls-flex cls-justify-end"
       >
         {files ? (
+          <>
+          <div className="cls-flex cls-flex-1">
+            <ProgressBar usage={dataReport?.podSpaceStatus.storageUsage} total={dataReport?.podSpaceStatus.storageLimit} isFetching={fetchingReport}/>
+          </div>
           <Pagination
             changePage={page}
             total={files.count}
             pageSize={pageSize}
             onChange={setPage}
           />
+          </>
         ) : null}
       </div>
       {selectedFile && openPreviewFile && !!hasPreview && (

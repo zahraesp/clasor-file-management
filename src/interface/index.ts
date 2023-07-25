@@ -66,3 +66,34 @@ export interface ILocalImage {
   compressedImage?: File | undefined;
   compressedPreview?: string | undefined;
 }
+
+export interface IReport {
+  categories: number;
+  documents: number;
+  drafts: number;
+  pendingDrafts: number;
+  pendingVersions: number;
+  podSpaceStatus: {
+    bandwidthLimit: number;
+    plan: {
+      title: string;
+      hash: string;
+      description: string;
+      type: string;
+      size: number;
+      bandwidth: number;
+      connections: number;
+      versions: number;
+    };
+    storageLimit: number;
+    storageUsage: number;
+  };
+}
+
+export interface IPodspaceResult<T> {
+  path: string;
+  reference: string;
+  result: T;
+  status: number;
+  timestamp: string;
+}

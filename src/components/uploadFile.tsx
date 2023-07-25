@@ -117,7 +117,7 @@ const UploadFile = ({
         <>
           <label
             htmlFor="file-upload"
-            className="dialog-content__submit lib-btn cls-btn cls-bg-[#7446B2] hover:cls-bg-[#7446B2]"
+            className="dialog-content__submit lib-btn cls-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7]"
           >
             <i className="fa fa-cloud-upload" />
             <UploadFileIcon className="cls-h-4 cls-w-4 cls-fill-white cls-ml-2 " />
