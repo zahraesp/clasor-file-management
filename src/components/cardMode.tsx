@@ -9,9 +9,12 @@ import DeleteFile from "./deleteFile";
 import { DownloadIcon, FolderIcon } from "../assets/svg";
 import PreviewFileModal from "./previewModal";
 import RenderIf from "../extra/renderIf";
+import ProgressBar from "../extra/progressBar";
 
 const CardMode = (props: ITableProps) => {
   const {
+    dataReport,
+    fetchingReport,
     files,
     pageSize,
     isFetching,
@@ -181,12 +184,17 @@ const CardMode = (props: ITableProps) => {
         className="file-list__card file-list__pagination cls-w-full cls-h-fit cls-bg-cover cls-mt-[30px] cls-text-left cls-flex cls-justify-end"
       >
         {files ? (
+          <>
+          <div className="cls-flex cls-flex-1">
+            <ProgressBar usage={dataReport?.podSpaceStatus.storageUsage} total={dataReport?.podSpaceStatus.storageLimit} isFetching={fetchingReport}/>
+          </div>
           <Pagination
             changePage={page}
             total={files.count}
             pageSize={pageSize}
             onChange={setPage}
           />
+        </>
         ) : null}
       </div>
       {selectedFile && openPreviewFile && !!hasPreview && (

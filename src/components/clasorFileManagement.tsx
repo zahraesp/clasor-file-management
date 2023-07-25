@@ -119,8 +119,6 @@ export const ClasorFileManagement = (props: IProps) => {
                   aria-describedby="button-addon2"/>
               <button 
                   className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline"
-                  type="submit"
-                  id="button-addon2"
                   onClick={handleSearchRequest}
                   >
                     {searchLoading 
@@ -131,8 +129,6 @@ export const ClasorFileManagement = (props: IProps) => {
               </button>
               <button 
                   className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline cls-mx-2"
-                  type="submit"
-                  id="button-addon2"
                   onClick={handleCleanSearch}
                   >
                     {cleanLoading 
@@ -200,6 +196,8 @@ export const ClasorFileManagement = (props: IProps) => {
         </RenderIf>
         <RenderIf isTrue={uiMode === "card"}>
           <CardMode
+            dataReport={dataReport}
+            fetchingReport={fetchingReport}
             files={filteredFiles}
             pageSize={pageSize}
             isFetching={isFetching}
