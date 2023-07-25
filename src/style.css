@@ -107,7 +107,7 @@ input.dp__input {
   }
 
   .bg-primary {
-    @apply cls-bg-[#7446B2];
+    @apply cls-bg-[#673AB7];
   }
 
   .custom-table {
@@ -131,7 +131,7 @@ input.dp__input {
   }
 
   .custom-table tr:focus-within td {
-    @apply cls-text-[#7446B2];
+    @apply cls-text-[#673AB7];
   }
   .custom-table tr:focus-within td:first-child::before {
     @apply cls-block;
@@ -162,10 +162,10 @@ input.dp__input {
   }
   .lib-modal-action .lib-modal-btn-success,
   .lib-modal-btn-success {
-    @apply cls-leading-[22px] cls-bg-[#7446B2] hover:cls-bg-[#7446B2] !cls-px-[23px] !cls-py-[9px] cls-text-white;
+    @apply cls-leading-[22px] cls-bg-[#673AB7] hover:cls-bg-[#673AB7] !cls-px-[23px] !cls-py-[9px] cls-text-white;
   }
   .lib-modal-action .lib-modal-btn-cancel {
-    @apply cls-bg-transparent cls-text-[#7446B2] hover:cls-bg-[#7446B2]  hover:cls-text-white cls-leading-[22px] !cls-px-[19px] !cls-py-[9px];
+    @apply cls-bg-transparent cls-text-[#673AB7] hover:cls-bg-[#673AB7]  hover:cls-text-white cls-leading-[22px] !cls-px-[19px] !cls-py-[9px];
   }
 
   .file-manager-breadcrumb li::after {

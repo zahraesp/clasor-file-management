@@ -123,7 +123,7 @@ export const Pagination = (props: IProps) => {
             </button>
           );
         })}
-        <button className="cls-btn lib-btn cls-bg-[#7446B2] hover:cls-bg-transparent cls-py-[10px] cls-px-3 cls-text-[#fff] hover:cls-text-[#7446B2]">
+        <button className="cls-btn lib-btn cls-bg-[#673AB7] hover:cls-bg-transparent cls-py-[10px] cls-px-3 cls-text-[#fff] hover:cls-text-[#673AB7]">
           {currectPage + 1}
         </button>
         {getNext(pageList, currectPage).map((item) => {
