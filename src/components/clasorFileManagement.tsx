@@ -18,7 +18,6 @@ export interface IProps {
     breadcrumb?: IBreadcrumb[];
   };
   pageSize?: number;
-  cardMode?: boolean;
   cropMode?: boolean;
   isFetching?: boolean;
   isLoading?: boolean;
@@ -42,7 +41,6 @@ export const ClasorFileManagement = (props: IProps) => {
     fetchingReport,
     files,
     pageSize,
-    cardMode,
     cropMode,
     isLoading,
     isFetching,
@@ -106,7 +104,6 @@ export const ClasorFileManagement = (props: IProps) => {
 
   return (
     <div className="file-management-wrapper cls-h-full cls-w-full cls-flex cls-flex-col">
-      {!!cardMode && (
         <div className="cls-flex cls-h-fit cls-flex-wrap cls-items-center">
           <div className="cls-flex cls-w-full cls-items-center cls-justify-end cls-gap-2">
           <div className="cls-flex cls-flex-1">
@@ -170,7 +167,6 @@ export const ClasorFileManagement = (props: IProps) => {
             </RenderIf>
           </div>
         </div>
-      )}
       <div className="file-management__file-list cls-flex cls-flex-col cls-flex-grow cls-max-h-full cls-h-[calc(100%-50px)] cls-pt-5">
         <RenderIf isTrue={!!files?.breadcrumb?.length && files.breadcrumb.length > 1}>
           <Breadcrumb
@@ -210,19 +206,6 @@ export const ClasorFileManagement = (props: IProps) => {
           />
         </RenderIf>
       </div>
-      {!cardMode && (
-        <div className="file-management__upload-file dialog-content__action-part cls-modal-action cls-mt-2 cls-self-end">
-          <UploadFile
-            onUploadFile={onUploadFile}
-            showCropper={showCropper}
-            setShowCropper={setShowCropper}
-            setLocalImage={setLocalImage}
-            processCount={processCount}
-            isLoading={isLoading}
-            isError={isError}
-          />
-        </div>
-      )}
       <RenderIf isTrue={showCropper}>
         <CropperModal
           cropMode={cropMode}
@@ -245,7 +228,6 @@ ClasorFileManagement.propTypes = {
     list: PropTypes.arrayOf(PropTypes.object),
     count: PropTypes.number,
   }),
-  cardMode: PropTypes.bool,
   cropMode: PropTypes.bool,
   isFetching: PropTypes.bool,
   isLoading: PropTypes.bool,
