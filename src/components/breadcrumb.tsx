@@ -1,11 +1,11 @@
-import { IBreadcrumb, IFile, IFolder } from "../interface";
+import { IBreadcrumb } from "../interface";
 
 interface IProps {
   breadcrumbList: IBreadcrumb[];
-  onSelectFile?: (file: IFile | IFolder | IBreadcrumb) => void;
+  onSelectBreadItem?: (breadItem: IBreadcrumb) => void;
 }
 
-const Breadcrumb = ({ breadcrumbList, onSelectFile }: IProps) => {
+const Breadcrumb = ({ breadcrumbList, onSelectBreadItem }: IProps) => {
 
   return (
     <nav className="cls-mb-4">
@@ -19,7 +19,7 @@ const Breadcrumb = ({ breadcrumbList, onSelectFile }: IProps) => {
                 <button
                   className="cls-cursor-pointer"
                   onClick={() => {
-                    onSelectFile?.(breadItem);
+                    onSelectBreadItem?.(breadItem);
                   }}
                 >
                   {breadItem.name}

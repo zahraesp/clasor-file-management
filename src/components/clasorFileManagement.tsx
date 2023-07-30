@@ -24,7 +24,9 @@ export interface IProps {
   isError?: boolean;
   hasPreview?: boolean;
   processCount?: number;
-  onSelectFile?: (file: IFile | IFolder | IBreadcrumb) => void;
+  onSelectFile?: (file: IFile) => void;
+  onSelectFolder?: (folder: IFolder) => void;
+  onSelectBreadItem?: (breadItem: IBreadcrumb) => void;
   onChangePage?: (page: number) => void;
   onRenameFile?: (file: IFile, newName: string) => void;
   onDeleteFile?: (file: IFile) => void;
@@ -48,6 +50,8 @@ export const ClasorFileManagement = (props: IProps) => {
     hasPreview,
     processCount,
     onSelectFile,
+    onSelectFolder,
+    onSelectBreadItem,
     onChangePage,
     onRenameFile,
     onDeleteFile,
@@ -171,7 +175,7 @@ export const ClasorFileManagement = (props: IProps) => {
         <RenderIf isTrue={!!files?.breadcrumb?.length && files.breadcrumb.length > 1}>
           <Breadcrumb
             breadcrumbList={files?.breadcrumb!}
-            onSelectFile={onSelectFile}
+            onSelectBreadItem={onSelectBreadItem}
           />
         </RenderIf>
         <RenderIf isTrue={uiMode === "table"}>
@@ -184,6 +188,7 @@ export const ClasorFileManagement = (props: IProps) => {
             isFetching={isFetching}
             isLoading={isLoading}
             onSelectFile={onSelectFile}
+            onSelectFolder={onSelectFolder}
             onChangePage={onChangePage}
             onRenameFile={onRenameFile}
             onDeleteFile={onDeleteFile}
@@ -199,6 +204,7 @@ export const ClasorFileManagement = (props: IProps) => {
             isFetching={isFetching}
             isLoading={isLoading}
             onSelectFile={onSelectFile}
+            onSelectFolder={onSelectFolder}
             onChangePage={onChangePage}
             onRenameFile={onRenameFile}
             onDeleteFile={onDeleteFile}

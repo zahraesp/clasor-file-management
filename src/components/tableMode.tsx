@@ -21,7 +21,8 @@ export interface ITableProps {
   isFetching?: boolean;
   isLoading?: boolean;
   hasPreview?: boolean;
-  onSelectFile?: (file: IFile | IFolder) => void;
+  onSelectFile?: (file: IFile) => void;
+  onSelectFolder?: (folder: IFolder) => void;
   onChangePage?: (page: number) => void;
   onRenameFile?: (file: IFile, newName: string) => void;
   onDeleteFile?: (file: IFile) => void;
@@ -39,6 +40,7 @@ const TableMode = (props: ITableProps) => {
     hasPreview,
     onChangePage,
     onSelectFile,
+    onSelectFolder,
     onRenameFile,
     onDeleteFile,
     generateDownloadLink,
@@ -59,11 +61,13 @@ const TableMode = (props: ITableProps) => {
     return 0;
   });
 
-  const onSelect = (file: IFile | IFolder) => {
-    if (!isFolder(file)) {
-      setSelectedFile(file);
+  const onSelect = (item: IFile | IFolder) => {
+    if (!isFolder(item)) {
+      setSelectedFile(item);
+      onSelectFile?.(item);
+    }else {
+      onSelectFolder?.(item)
     }
-    onSelectFile?.(file);
   };
 
   useEffect(() => {
