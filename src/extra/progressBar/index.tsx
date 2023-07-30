@@ -57,8 +57,8 @@ const ProgressBar = ({ usage, total, isFetching }: {usage?: number, total?: numb
           </div>
         </div>
       </div>
-      <div className="cls-flex cls-justify-between cls-items-center cls-pb-2 cls-flex-col cls-mt-3">
-        <p className="cls-text-xs cls-text-primary cls-font-bold">
+      <div className="cls-flex cls-justify-between cls-items-center cls-flex-col"  style={{marginTop: "0.45rem"}}>
+        <span className="cls-text-xs cls-text-primary cls-font-bold">
           {volumeUnit(usage)}
           {" "}
           از
@@ -66,7 +66,7 @@ const ProgressBar = ({ usage, total, isFetching }: {usage?: number, total?: numb
           {volumeUnit(total)}
           {" "}
           استفاده شده است.
-        </p>
+        </span>
       </div>
     </div>
   );

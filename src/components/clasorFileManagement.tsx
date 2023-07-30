@@ -88,9 +88,15 @@ export const ClasorFileManagement = (props: IProps) => {
   
   const handleSearchRequest = async () => {
     setSearchLoading(true);
+    onChangePage?.(0);
+    const paginationDiv = document.querySelector('.pagination');
+    const firstButton = paginationDiv?.querySelector('button:nth-child(2)');
+    const clickEvent = new MouseEvent('click', { bubbles: true });
+    
     if(onSearchFile){
       const data = await onSearchFile(name);
       setFilteredFiles(data.result);
+      firstButton?.dispatchEvent(clickEvent);
       setSearchLoading(false);
     }
   };

@@ -251,7 +251,7 @@ const TableMode = (props: ITableProps) => {
       >
         {files ? (
           <>
-          <div className="cls-flex cls-flex-1">
+          <div className="cls-flex cls-flex-1 cls-overflow-hidden">
             <ProgressBar usage={dataReport?.podSpaceStatus.storageUsage} total={dataReport?.podSpaceStatus.storageLimit} isFetching={fetchingReport}/>
           </div>
           <Pagination
