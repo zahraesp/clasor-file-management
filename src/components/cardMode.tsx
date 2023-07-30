@@ -24,6 +24,7 @@ const CardMode = (props: ITableProps) => {
     onChangePage,
     hasPreview,
     onSelectFile,
+    onSelectFolder,
     generateDownloadLink,
   } = props;
 
@@ -31,11 +32,13 @@ const CardMode = (props: ITableProps) => {
   const [openPreviewFile, setOpenPreviewFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState<IFile>();
 
-  const onSelect = (file: IFile | IFolder) => {
-    if (!isFolder(file)) {
-      setSelectedFile(file);
+  const onSelect = (item: IFile | IFolder) => {
+    if (!isFolder(item)) {
+      setSelectedFile(item);
+      onSelectFile?.(item);
+    }else {
+      onSelectFolder?.(item)
     }
-    onSelectFile?.(file);
   };
 
   useEffect(() => {
