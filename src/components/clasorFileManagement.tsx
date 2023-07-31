@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { IBreadcrumb, IFile, IFolder, IPodspaceResult, IReport } from "../interface";
 import { BroomIcon, GridIcon, SearchIcon, TableIcon } from "../assets/svg";
 import UploadFile from "./uploadFile";
@@ -74,6 +74,8 @@ export const ClasorFileManagement = (props: IProps) => {
   const [filteredFiles, setFilteredFiles] = useState<{ list: IFile[]; count: number }>();
   const [searchLoading, setSearchLoading] = useState(false);
   const [cleanLoading, setCleanLoading] = useState(false);
+  const [isSearchDisabled, setIsSearchDisabled] = useState(true);
+  const [isCLeanDisabled, setIsCLeanDisabled] = useState(true);
 
   useEffect(() => {
     if (files) {
@@ -82,8 +84,10 @@ export const ClasorFileManagement = (props: IProps) => {
   }, [files]);
   
 
-  const handleSearchInput = (query: string) => {
-    setName(query);
+  const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const name = event.currentTarget.value;
+    setName(name);
+    setIsSearchDisabled(name === '');
   };
   
   const handleSearchRequest = async () => {
@@ -99,6 +103,7 @@ export const ClasorFileManagement = (props: IProps) => {
       firstButton?.dispatchEvent(clickEvent);
       setSearchLoading(false);
     }
+    setIsCLeanDisabled(false);
   };
 
   const handleCleanSearch = async () => {
@@ -110,6 +115,8 @@ export const ClasorFileManagement = (props: IProps) => {
     }
     let inputValue = (document.getElementById("searchInput") as HTMLInputElement);
     inputValue.value = '';
+    setIsSearchDisabled(true);
+    setIsCLeanDisabled(true);
   };
 
   return (
@@ -122,11 +129,14 @@ export const ClasorFileManagement = (props: IProps) => {
                   id="searchInput"
                   className="cls-shadow cls-appearance-none cls-border cls-text-sm cls-rounded cls-py-2 cls-px-4 cls-text-gray-700 cls-leading-tight focus:cls-outline-none focus:cls-shadow-outline"
                   placeholder='جستجوی فایل...'
-                  onChange={e => handleSearchInput(e.currentTarget.value)}
+                  onChange={e => handleSearchInput(e)}
+                  style={{borderTopLeftRadius: "0", borderBottomLeftRadius: "0"}}
                   aria-describedby="button-addon2"/>
               <button 
                   className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline"
                   onClick={handleSearchRequest}
+                  disabled={isSearchDisabled}
+                  style={{opacity: isSearchDisabled ? "50%" : "100%" , borderTopRightRadius: "0", borderBottomRightRadius: "0"}}
                   >
                     {searchLoading 
                     ? <div className="cls-w-full cls-flex-col cls-flex cls-justify-center cls-items-center">
@@ -137,6 +147,8 @@ export const ClasorFileManagement = (props: IProps) => {
               <button 
                   className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline cls-mx-2"
                   onClick={handleCleanSearch}
+                  disabled={isCLeanDisabled}
+                  style={{opacity: isCLeanDisabled ? "50%" : "100%"}}
                   >
                     {cleanLoading 
                     ? <div className="cls-w-full cls-flex-col cls-flex cls-justify-center cls-items-center">
