@@ -71,10 +71,7 @@ const UploadFile = ({
         toast.error("حجم فایل بیشتر از 50 MB است");
       }
 
-      const formData = new FormData();
-      formData.append("file", file);
-
-      onUploadFile?.(formData, showCropper);
+      onUploadFile?.(file, showCropper);
     }
   };
 
