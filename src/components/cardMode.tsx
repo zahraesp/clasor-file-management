@@ -17,6 +17,7 @@ const CardMode = (props: ITableProps) => {
     fetchingReport,
     files,
     pageSize,
+    resetPagination,
     isFetching,
     isLoading,
     onDeleteFile,
@@ -50,6 +51,12 @@ const CardMode = (props: ITableProps) => {
       onSelectFile?.(selectedFile);
     }
   }, [selectedFile]);
+
+  useEffect(() => {
+    if(resetPagination){
+      setPage(0);
+    }
+  }, [resetPagination]);
 
   return (
     <>

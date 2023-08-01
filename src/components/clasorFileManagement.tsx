@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { IBreadcrumb, IFile, IFolder, IPodspaceResult, IReport } from "../interface";
+import { IBreadcrumb, IFile, IFolder, IReport } from "../interface";
 import { BroomIcon, GridIcon, SearchIcon, TableIcon } from "../assets/svg";
 import UploadFile from "./uploadFile";
 import RenderIf from "../extra/renderIf";
@@ -31,7 +31,7 @@ export interface IProps {
   onRenameFile?: (file: IFile, newName: string) => void;
   onDeleteFile?: (file: IFile) => void;
   onUploadFile?: (file: any, showCropper: boolean) => void;
-  onSearchFile?: (name?: string) => Promise<IPodspaceResult<{ list: IFile[]; count: number; }>>;
+  onSearchFile?: (name?: string) => void;
   generateDownloadLink?: (file: IFile) => string;
 }
 
@@ -70,10 +70,10 @@ export const ClasorFileManagement = (props: IProps) => {
     compressedImage?: File;
     compressedPreview?: string;
   } | null>(null);
+  const [resetPagination, setResetPagination] = useState(false);
+
   const [name, setName] = useState("");
   const [filteredFiles, setFilteredFiles] = useState<{ list: IFile[]; count: number }>();
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [cleanLoading, setCleanLoading] = useState(false);
   const [isSearchDisabled, setIsSearchDisabled] = useState(true);
   const [isCLeanDisabled, setIsCLeanDisabled] = useState(true);
 
@@ -91,32 +91,28 @@ export const ClasorFileManagement = (props: IProps) => {
   };
   
   const handleSearchRequest = async () => {
-    setSearchLoading(true);
-    onChangePage?.(0);
-    const paginationDiv = document.querySelector('.pagination');
-    const firstButton = paginationDiv?.querySelector('button:nth-child(2)');
-    const clickEvent = new MouseEvent('click', { bubbles: true });
-    
+    setResetPagination(true);
     if(onSearchFile){
-      const data = await onSearchFile(name);
-      setFilteredFiles(data.result);
-      firstButton?.dispatchEvent(clickEvent);
-      setSearchLoading(false);
+      onSearchFile(name);
     }
     setIsCLeanDisabled(false);
+    setTimeout(() => {
+      setResetPagination(false);
+    });
   };
 
   const handleCleanSearch = async () => {
-    setCleanLoading(true);
+    setResetPagination(true);
     if(onSearchFile){
-      const data = await onSearchFile();
-      setFilteredFiles(data.result);
-      setCleanLoading(false);
+      onSearchFile();
     }
     let inputValue = (document.getElementById("searchInput") as HTMLInputElement);
     inputValue.value = '';
     setIsSearchDisabled(true);
     setIsCLeanDisabled(true);
+    setTimeout(() => {
+      setResetPagination(false);
+    });
   };
 
   return (
@@ -138,11 +134,7 @@ export const ClasorFileManagement = (props: IProps) => {
                   disabled={isSearchDisabled}
                   style={{opacity: isSearchDisabled ? "50%" : "100%" , borderTopRightRadius: "0", borderBottomRightRadius: "0"}}
                   >
-                    {searchLoading 
-                    ? <div className="cls-w-full cls-flex-col cls-flex cls-justify-center cls-items-center">
-                        <div className="spinner cls-w-4 cls-h-4" />
-                      </div>
-                    : <SearchIcon className="cls-w-4 cls-h-4 cls-fill-white" />}
+                    <SearchIcon className="cls-w-4 cls-h-4 cls-fill-white" />
               </button>
               <button 
                   className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline cls-mx-2"
@@ -150,11 +142,7 @@ export const ClasorFileManagement = (props: IProps) => {
                   disabled={isCLeanDisabled}
                   style={{opacity: isCLeanDisabled ? "50%" : "100%"}}
                   >
-                    {cleanLoading 
-                    ? <div className="cls-w-full cls-flex-col cls-flex cls-justify-center cls-items-center">
-                        <div className="spinner cls-w-4 cls-h-4" />
-                       </div>
-                    : <BroomIcon className="cls-w-4 cls-h-4 cls-fill-white" />}
+                    <BroomIcon className="cls-w-4 cls-h-4 cls-fill-white" />
               </button>
             </div>
             <button
@@ -205,6 +193,7 @@ export const ClasorFileManagement = (props: IProps) => {
             hasPreview={hasPreview}
             isFetching={isFetching}
             isLoading={isLoading}
+            resetPagination={resetPagination}
             onSelectFile={onSelectFile}
             onSelectFolder={onSelectFolder}
             onChangePage={onChangePage}
@@ -221,6 +210,7 @@ export const ClasorFileManagement = (props: IProps) => {
             pageSize={pageSize}
             isFetching={isFetching}
             isLoading={isLoading}
+            resetPagination={resetPagination}
             onSelectFile={onSelectFile}
             onSelectFolder={onSelectFolder}
             onChangePage={onChangePage}

@@ -21,6 +21,7 @@ export interface ITableProps {
   isFetching?: boolean;
   isLoading?: boolean;
   hasPreview?: boolean;
+  resetPagination?: boolean;
   onSelectFile?: (file: IFile) => void;
   onSelectFolder?: (folder: IFolder) => void;
   onChangePage?: (page: number) => void;
@@ -38,6 +39,7 @@ const TableMode = (props: ITableProps) => {
     isLoading,
     isFetching,
     hasPreview,
+    resetPagination,
     onChangePage,
     onSelectFile,
     onSelectFolder,
@@ -73,6 +75,12 @@ const TableMode = (props: ITableProps) => {
   useEffect(() => {
     onChangePage?.(page);
   }, [page]);
+
+  useEffect(() => {
+    if(resetPagination){
+      setPage(0);
+    }
+  }, [resetPagination]);
 
   return (
     <div className="cls-flex cls-flex-col cls-flex-grow cls-overflow-auto">

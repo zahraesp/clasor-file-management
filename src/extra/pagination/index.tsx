@@ -17,7 +17,7 @@ export const Pagination = (props: IProps) => {
     if (typeof changePage !== "undefined") {
       setCurrectPage(changePage);
     }
-  }, []);
+  }, [changePage]);
 
   const calculateCount = () => {
     let count = 1;
