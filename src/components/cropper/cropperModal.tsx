@@ -74,8 +74,9 @@ const CropperModal = (props: IProps) => {
               ? compressdImageFile
               : localImage.compressedImage ||
                   croppedImage ||
-                  localImage.originalImage
-          );
+                  localImage.originalImage,
+            encodeURIComponent(compressdImageFile.name)
+            );
           onUploadFile?.(formData, showCropper);
         });
         reader.readAsDataURL(compressedResult);
