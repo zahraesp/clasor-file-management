@@ -24,6 +24,7 @@ export interface IProps {
   isError?: boolean;
   hasPreview?: boolean;
   processCount?: number;
+  getDataType?: (dType: string) => void;
   onSelectFile?: (file: IFile) => void;
   onSelectFolder?: (folder: IFolder) => void;
   onSelectBreadItem?: (breadItem: IBreadcrumb) => void;
@@ -49,6 +50,7 @@ export const ClasorFileManagement = (props: IProps) => {
     isError,
     hasPreview,
     processCount,
+    getDataType,
     onSelectFile,
     onSelectFolder,
     onSelectBreadItem,
@@ -73,16 +75,26 @@ export const ClasorFileManagement = (props: IProps) => {
   const [resetPagination, setResetPagination] = useState(false);
 
   const [name, setName] = useState("");
-  const [filteredFiles, setFilteredFiles] = useState<{ list: IFile[]; count: number }>();
+  const [filteredFiles, setFilteredFiles] = useState<{ list: IFile[]; count: number, breadcrumb?: IBreadcrumb[]}>();
   const [isSearchDisabled, setIsSearchDisabled] = useState(true);
   const [isCLeanDisabled, setIsCLeanDisabled] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => {    
     if (files) {
-      setFilteredFiles({ list: files.list, count: files.count });
+      setFilteredFiles({
+        list: [...filteredFiles?.list || [], ... files.list],
+        count: files.count,
+      });
     }
   }, [files]);
-  
+
+  useEffect(() => {
+    setFilteredFiles({
+      list: [],
+      count: 0
+    });
+    getDataType?.(uiMode);
+  }, [uiMode]);
 
   const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.currentTarget.value;
@@ -91,6 +103,10 @@ export const ClasorFileManagement = (props: IProps) => {
   };
   
   const handleSearchRequest = async () => {
+    setFilteredFiles({
+      list: [],
+      count: 0,
+    });
     setResetPagination(true);
     if(onSearchFile){
       onSearchFile(name);
@@ -102,6 +118,10 @@ export const ClasorFileManagement = (props: IProps) => {
   };
 
   const handleCleanSearch = async () => {
+    setFilteredFiles({
+      list: [],
+      count: 0,
+    });
     setResetPagination(true);
     if(onSearchFile){
       onSearchFile();
