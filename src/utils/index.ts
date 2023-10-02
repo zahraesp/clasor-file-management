@@ -63,5 +63,5 @@ export const getColor = (type: string) => {
 };
 
 export const isFolder = (item: IFile | IFolder | IBreadcrumb): item is IFolder => {
-  return ("type" in item && item.type === "application/vnd.podspace.folder") || !("thumbnail" in item) ;
+  return ("type" in item && item.type === "application/vnd.podspace.folder");
 }
