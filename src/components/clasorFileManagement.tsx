@@ -13,16 +13,19 @@ export interface IProps {
   dataReport?: IReport;
   fetchingReport?: boolean;
   files?: {
-    list: IFile[];
-    count: number;
-    breadcrumb?: IBreadcrumb[];
+    pages: {
+      list: IFile[];
+      count: number;
+      breadcrumb?: IBreadcrumb[];
+    }[];
+    pageParams?: any;
   };
-  pageSize?: number;
   cropMode?: boolean;
   isFetching?: boolean;
   isLoading?: boolean;
   isError?: boolean;
   hasPreview?: boolean;
+  hasNextPage?: boolean;
   processCount?: number;
   getDataType?: (dType: string) => void;
   onSelectFile?: (file: IFile) => void;
@@ -33,6 +36,7 @@ export interface IProps {
   onDeleteFile?: (file: IFile) => void;
   onUploadFile?: (file: any, showCropper: boolean) => void;
   onSearchFile?: (name?: string) => void;
+  onFetchNextPage?: (hasNextPage?: boolean) => void;
   generateDownloadLink?: (file: IFile) => string;
 }
 
@@ -43,7 +47,6 @@ export const ClasorFileManagement = (props: IProps) => {
     dataReport,
     fetchingReport,
     files,
-    pageSize,
     cropMode,
     isLoading,
     isFetching,
@@ -54,12 +57,12 @@ export const ClasorFileManagement = (props: IProps) => {
     onSelectFile,
     onSelectFolder,
     onSelectBreadItem,
-    onChangePage,
     onRenameFile,
     onDeleteFile,
     onUploadFile,
     onSearchFile,
     generateDownloadLink,
+    onFetchNextPage,
   } = props;
 
   const [uiMode, setUiMode] = useState<IUiMode>("table");
@@ -75,40 +78,18 @@ export const ClasorFileManagement = (props: IProps) => {
   const [resetPagination, setResetPagination] = useState(false);
 
   const [name, setName] = useState("");
-  const [filteredFiles, setFilteredFiles] = useState<{ list: IFile[]; count: number, breadcrumb?: IBreadcrumb[]}>();
   const [isSearchDisabled, setIsSearchDisabled] = useState(true);
   const [isCLeanDisabled, setIsCLeanDisabled] = useState(true);
-
-  useEffect(() => {    
-    if (files) {
-      setFilteredFiles({
-        list: [...filteredFiles?.list || [], ... files.list],
-        count: files.count,
-      });
-    }
-  }, [files]);
-
-  useEffect(() => {
-    setFilteredFiles({
-      list: [],
-      count: 0
-    });
-    getDataType?.(uiMode);
-  }, [uiMode]);
 
   const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.currentTarget.value;
     setName(name);
-    setIsSearchDisabled(name === '');
+    setIsSearchDisabled(name === "");
   };
-  
+
   const handleSearchRequest = async () => {
-    setFilteredFiles({
-      list: [],
-      count: 0,
-    });
     setResetPagination(true);
-    if(onSearchFile){
+    if (onSearchFile) {
       onSearchFile(name);
     }
     setIsCLeanDisabled(false);
@@ -117,17 +98,17 @@ export const ClasorFileManagement = (props: IProps) => {
     });
   };
 
+  useEffect(() => {
+    getDataType?.(uiMode);
+  }, [uiMode]);
+
   const handleCleanSearch = async () => {
-    setFilteredFiles({
-      list: [],
-      count: 0,
-    });
     setResetPagination(true);
-    if(onSearchFile){
+    if (onSearchFile) {
       onSearchFile();
     }
-    let inputValue = (document.getElementById("searchInput") as HTMLInputElement);
-    inputValue.value = '';
+    let inputValue = document.getElementById("searchInput") as HTMLInputElement;
+    inputValue.value = "";
     setIsSearchDisabled(true);
     setIsCLeanDisabled(true);
     setTimeout(() => {
@@ -137,106 +118,113 @@ export const ClasorFileManagement = (props: IProps) => {
 
   return (
     <div className="file-management-wrapper cls-h-full cls-w-full cls-flex cls-flex-col">
-        <div className="cls-flex cls-h-fit cls-flex-wrap cls-items-center">
-          <div className="cls-flex cls-w-full cls-items-center cls-justify-end cls-gap-2">
+      <div className="cls-flex cls-h-fit cls-flex-wrap cls-items-center">
+        <div className="cls-flex cls-w-full cls-items-center cls-justify-end cls-gap-2">
           <div className="cls-flex cls-flex-1">
-              <input 
-                  type="text"
-                  id="searchInput"
-                  className="cls-shadow cls-appearance-none cls-border cls-text-sm cls-rounded cls-py-2 cls-px-4 cls-text-gray-700 cls-leading-tight focus:cls-outline-none focus:cls-shadow-outline"
-                  placeholder='جستجوی فایل...'
-                  onChange={e => handleSearchInput(e)}
-                  style={{borderTopLeftRadius: "0", borderBottomLeftRadius: "0"}}
-                  aria-describedby="button-addon2"/>
-              <button 
-                  className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline"
-                  onClick={handleSearchRequest}
-                  disabled={isSearchDisabled}
-                  style={{opacity: isSearchDisabled ? "50%" : "100%" , borderTopRightRadius: "0", borderBottomRightRadius: "0"}}
-                  >
-                    <SearchIcon className="cls-w-4 cls-h-4 cls-fill-white" />
-              </button>
-              <button 
-                  className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline cls-mx-2"
-                  onClick={handleCleanSearch}
-                  disabled={isCLeanDisabled}
-                  style={{opacity: isCLeanDisabled ? "50%" : "100%"}}
-                  >
-                    <BroomIcon className="cls-w-4 cls-h-4 cls-fill-white" />
-              </button>
-            </div>
+            <input
+              type="text"
+              id="searchInput"
+              className="cls-shadow cls-appearance-none cls-border cls-text-sm cls-rounded cls-py-2 cls-px-4 cls-text-gray-700 cls-leading-tight focus:cls-outline-none focus:cls-shadow-outline"
+              placeholder="جستجوی فایل..."
+              onChange={(e) => handleSearchInput(e)}
+              style={{ borderTopLeftRadius: "0", borderBottomLeftRadius: "0" }}
+              aria-describedby="button-addon2"
+            />
             <button
-              className="lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
-              onClick={() => {
-                setUiMode("card");
+              className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline"
+              onClick={handleSearchRequest}
+              disabled={isSearchDisabled}
+              style={{
+                opacity: isSearchDisabled ? "50%" : "100%",
+                borderTopRightRadius: "0",
+                borderBottomRightRadius: "0",
               }}
             >
-              <GridIcon className="cls-w-4 cls-h-4" />
+              <SearchIcon className="cls-w-4 cls-h-4 cls-fill-white" />
             </button>
             <button
-              className="cls-btn lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
-              onClick={() => {
-                setUiMode("table");
-              }}
+              className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline cls-mx-2"
+              onClick={handleCleanSearch}
+              disabled={isCLeanDisabled}
+              style={{ opacity: isCLeanDisabled ? "50%" : "100%" }}
             >
-              <TableIcon className="cls-w-4 cls-h-4" />
+              <BroomIcon className="cls-w-4 cls-h-4 cls-fill-white" />
             </button>
-
-            <RenderIf isTrue={!!onUploadFile}>
-              <div className="file-management__upload-file cls-self-end">
-                <UploadFile
-                  onUploadFile={onUploadFile}
-                  showCropper={showCropper}
-                  setShowCropper={setShowCropper}
-                  setLocalImage={setLocalImage}
-                  processCount={processCount}
-                  isLoading={isLoading}
-                  isError={isError}
-                />
-              </div>
-            </RenderIf>
           </div>
+          <button
+            className="lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
+            onClick={() => {
+              setUiMode("card");
+            }}
+          >
+            <GridIcon className="cls-w-4 cls-h-4" />
+          </button>
+          <button
+            className="cls-btn lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
+            onClick={() => {
+              setUiMode("table");
+            }}
+          >
+            <TableIcon className="cls-w-4 cls-h-4" />
+          </button>
+
+          <RenderIf isTrue={!!onUploadFile}>
+            <div className="file-management__upload-file cls-self-end">
+              <UploadFile
+                onUploadFile={onUploadFile}
+                showCropper={showCropper}
+                setShowCropper={setShowCropper}
+                setLocalImage={setLocalImage}
+                processCount={processCount}
+                isLoading={isLoading}
+                isError={isError}
+              />
+            </div>
+          </RenderIf>
         </div>
+      </div>
       <div className="file-management__file-list cls-flex cls-flex-col cls-flex-grow cls-max-h-full cls-h-[calc(100%-50px)] cls-pt-5">
-        <RenderIf isTrue={!!files?.breadcrumb?.length && files.breadcrumb.length > 1}>
-          <Breadcrumb
-            breadcrumbList={files?.breadcrumb!}
-            onSelectBreadItem={onSelectBreadItem}
-          />
-        </RenderIf>
+        {files?.pages.map((page) => {
+          return (
+            <RenderIf isTrue={!!page?.breadcrumb?.length}>
+              <Breadcrumb
+                breadcrumbList={page.breadcrumb!}
+                onSelectBreadItem={onSelectBreadItem}
+              />
+            </RenderIf>
+          );
+        })}
         <RenderIf isTrue={uiMode === "table"}>
           <TableMode
             dataReport={dataReport}
             fetchingReport={fetchingReport}
-            files={filteredFiles}
-            pageSize={pageSize}
+            files={files}
             hasPreview={hasPreview}
             isFetching={isFetching}
             isLoading={isLoading}
             resetPagination={resetPagination}
             onSelectFile={onSelectFile}
             onSelectFolder={onSelectFolder}
-            onChangePage={onChangePage}
             onRenameFile={onRenameFile}
             onDeleteFile={onDeleteFile}
             generateDownloadLink={generateDownloadLink}
+            onFetchNextPage={onFetchNextPage}
           />
         </RenderIf>
         <RenderIf isTrue={uiMode === "card"}>
           <CardMode
             dataReport={dataReport}
             fetchingReport={fetchingReport}
-            files={filteredFiles}
-            pageSize={pageSize}
+            files={files}
             isFetching={isFetching}
             isLoading={isLoading}
             resetPagination={resetPagination}
             onSelectFile={onSelectFile}
             onSelectFolder={onSelectFolder}
-            onChangePage={onChangePage}
             onRenameFile={onRenameFile}
             onDeleteFile={onDeleteFile}
             generateDownloadLink={generateDownloadLink}
+            onFetchNextPage={onFetchNextPage}
           />
         </RenderIf>
       </div>
@@ -259,8 +247,13 @@ export const ClasorFileManagement = (props: IProps) => {
 
 ClasorFileManagement.propTypes = {
   files: PropTypes.shape({
-    list: PropTypes.arrayOf(PropTypes.object),
-    count: PropTypes.number,
+    pages: PropTypes.arrayOf(
+      PropTypes.shape({
+        list: PropTypes.arrayOf(PropTypes.object),
+        count: PropTypes.number,
+      })
+    ),
+    pageParams: PropTypes.any,
   }),
   cropMode: PropTypes.bool,
   isFetching: PropTypes.bool,
@@ -273,5 +266,6 @@ ClasorFileManagement.propTypes = {
   onRenameFile: PropTypes.func,
   onDeleteFile: PropTypes.func,
   onUploadFile: PropTypes.func,
+  onFetchNextPage: PropTypes.func,
   generateDownloadLink: PropTypes.func,
 };
