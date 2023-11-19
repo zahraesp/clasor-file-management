@@ -136,139 +136,142 @@ const TableMode = (props: ITableProps) => {
             </tr>
           </thead>
           <tbody>
-            {files?.pages.map((page) => {
-              return page.list.length ? (
-                page.list.map((item) => {
-                  const link = !isFolder(item)
-                    ? generateDownloadLink?.(item)
-                    : undefined;
-                  const fileSizeInKB = !isFolder(item)
-                    ? item.size / 1000
-                    : undefined;
-                  const fileSizeInMB =
-                    !isFolder(item) && fileSizeInKB
-                      ? fileSizeInKB / 1000
-                      : undefined;
-                  return (
-                    <tr
-                      tabIndex={0}
-                      key={JSON.stringify(item)}
-                      className="hover:cls-bg-sky-100 hover:cls-cursor-pointer !cls-max-h-16"
-                      onClick={() => {
-                        if (hasPreview && !isFolder(item)) {
-                          setOpenPreviewFile(true);
-                        }
-                        return onSelect?.(item);
-                      }}
-                    >
-                      <td>
-                        <div className="cls-flex cls-items-center">
-                          <div className="cls-w-8 cls-h-8 cls-inline-block">
-                            {!isFolder(item) ? (
-                              <FileIcon
-                                extension={item.extension}
-                                {...defaultStyles[
-                                  item.extension as unknown as DefaultExtensionType
-                                ]}
-                                glyphColor={getColor(item.extension || "")}
-                                labelColor={getColor(item.extension || "")}
-                              />
-                            ) : (
-                              <FolderIcon className="cls-fill-[#DC7611] cls-w-8 cls-h-8" />
-                            )}
-                          </div>
-                          <span className="cls-block cls-text-xs cls-font-yekan-regular cls-font-normal cls-text-[#919191] cls-mr-[10px] cls-truncate">
-                            {`${item.name || ""}${
-                              item.extension && !isFolder(item)
-                                ? `.${item.extension}`
-                                : ""
-                            }`}
-                          </span>
-                        </div>
-                      </td>
-                      <td>
-                        {!isFolder(item) ? (
-                          <span className="cls-px-3 cls-py-[5px] cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
-                            {FaDateFromTimestamp(item.updated)}
-                          </span>
-                        ) : null}
-                      </td>
-                      <td>
-                        <span className="cls-px-3 cls-py-[5px]  cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
-                          {!isFolder(item) && fileSizeInKB ? (
-                            <span className="cls-text-xs cls-text-right">
-                              {fileSizeInKB < 1000
-                                ? `${fileSizeInKB.toFixed(2)} کیلوبایت`
-                                : `${fileSizeInMB?.toFixed(2)} مگابایت`}
-                            </span>
-                          ) : null}
-                        </span>
-                      </td>
-                      <td>
-                        {!isFolder(item) ? (
-                          <div className="file-table__actions cls-h-8 cls-flex !cls-gap-x-[21px] cls-justify-end">
-                            <div className="download-file">
-                              <RenderIf isTrue={!!link}>
-                                <div className="lib-btn !cls-p-0 cls-bg-transparent hover:cls-bg-transparent">
-                                  <a
-                                    href={link}
-                                    download
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                    }}
-                                  >
-                                    <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#0D99FF]" />
-                                  </a>
-                                </div>
-                              </RenderIf>
+            {!!isLoading ? (
+              <tr>
+                <td colSpan={4}>
+                  <div className="flex items-center justify-center">
+                    <div className="spinner" />
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              files?.pages.map((page) => {
+                return page.list.length
+                  ? page.list.map((item) => {
+                      const link = !isFolder(item)
+                        ? generateDownloadLink?.(item)
+                        : undefined;
+                      const fileSizeInKB = !isFolder(item)
+                        ? item.size / 1000
+                        : undefined;
+                      const fileSizeInMB =
+                        !isFolder(item) && fileSizeInKB
+                          ? fileSizeInKB / 1000
+                          : undefined;
+                      return (
+                        <tr
+                          tabIndex={0}
+                          key={JSON.stringify(item)}
+                          className="hover:cls-bg-sky-100 hover:cls-cursor-pointer !cls-max-h-16"
+                          onClick={() => {
+                            if (hasPreview && !isFolder(item)) {
+                              setOpenPreviewFile(true);
+                            }
+                            return onSelect?.(item);
+                          }}
+                        >
+                          <td>
+                            <div className="cls-flex cls-items-center">
+                              <div className="cls-w-8 cls-h-8 cls-inline-block">
+                                {!isFolder(item) ? (
+                                  <FileIcon
+                                    extension={item.extension}
+                                    {...defaultStyles[
+                                      item.extension as unknown as DefaultExtensionType
+                                    ]}
+                                    glyphColor={getColor(item.extension || "")}
+                                    labelColor={getColor(item.extension || "")}
+                                  />
+                                ) : (
+                                  <FolderIcon className="cls-fill-[#DC7611] cls-w-8 cls-h-8" />
+                                )}
+                              </div>
+                              <span className="cls-block cls-text-xs cls-font-yekan-regular cls-font-normal cls-text-[#919191] cls-mr-[10px] cls-truncate">
+                                {`${item.name || ""}${
+                                  item.extension && !isFolder(item)
+                                    ? `.${item.extension}`
+                                    : ""
+                                }`}
+                              </span>
                             </div>
+                          </td>
+                          <td>
+                            {!isFolder(item) ? (
+                              <span className="cls-px-3 cls-py-[5px] cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
+                                {FaDateFromTimestamp(item.updated)}
+                              </span>
+                            ) : null}
+                          </td>
+                          <td>
+                            <span className="cls-px-3 cls-py-[5px]  cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
+                              {!isFolder(item) && fileSizeInKB ? (
+                                <span className="cls-text-xs cls-text-right">
+                                  {fileSizeInKB < 1000
+                                    ? `${fileSizeInKB.toFixed(2)} کیلوبایت`
+                                    : `${fileSizeInMB?.toFixed(2)} مگابایت`}
+                                </span>
+                              ) : null}
+                            </span>
+                          </td>
+                          <td>
+                            {!isFolder(item) ? (
+                              <div className="file-table__actions cls-h-8 cls-flex !cls-gap-x-[21px] cls-justify-end">
+                                <div className="download-file">
+                                  <RenderIf isTrue={!!link}>
+                                    <div className="lib-btn !cls-p-0 cls-bg-transparent hover:cls-bg-transparent">
+                                      <a
+                                        href={link}
+                                        download
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                        }}
+                                      >
+                                        <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#0D99FF]" />
+                                      </a>
+                                    </div>
+                                  </RenderIf>
+                                </div>
 
-                            <RenderIf isTrue={!!onRenameFile}>
-                              <RenameFile
-                                fileInfo={item}
-                                onRenameFile={onRenameFile}
-                                isLoading={isLoading}
-                              />
-                            </RenderIf>
+                                <RenderIf isTrue={!!onRenameFile}>
+                                  <RenameFile
+                                    fileInfo={item}
+                                    onRenameFile={onRenameFile}
+                                    isLoading={isLoading}
+                                  />
+                                </RenderIf>
 
-                            <RenderIf isTrue={!!onDeleteFile}>
-                              <DeleteFile
-                                fileInfo={item}
-                                onDeleteFile={onDeleteFile}
-                                isLoading={isLoading}
-                              />
-                            </RenderIf>
-                          </div>
-                        ) : null}
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : !page.list.length && !isFetching ? (
-                  <tr>
-                    <td colSpan={4} className="!cls-text-right !text-right">
-                      فایلی برای نمایش وجود ندارد.
-                    </td>
-                  </tr>
-              ) : (
-                <div
-                  className="spinner cls-self-center cls-justify-center"
-                  style={{
-                    justifySelf: "center",
-                  }}
-                />
-              );
-            })}
+                                <RenderIf isTrue={!!onDeleteFile}>
+                                  <DeleteFile
+                                    fileInfo={item}
+                                    onDeleteFile={onDeleteFile}
+                                    isLoading={isLoading}
+                                  />
+                                </RenderIf>
+                              </div>
+                            ) : null}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  : !page.list.length && !isFetching && (
+                      <tr>
+                        <td colSpan={4} className="!cls-text-right !text-right">
+                          فایلی برای نمایش وجود ندارد.
+                        </td>
+                      </tr>
+                    );
+              })
+            )}
             <RenderIf isTrue={!!hasNextPage}>
               <tr>
                 <td colSpan={4} className="!text-center">
                   <button
                     ref={ref}
-                    className="self-center text-[10px] text-primary"
+                    className="cls-self-center cls-text-[10px] cls-text-[#673AB7]"
                     disabled={isFetchingNextPage}
                     onClick={fetchNextPage}
                   >
-                    {isFetchingNextPage ? (
+                    {isFetchingNextPage  ? (
                       <div className="spinner" />
                     ) : (
                       "نمایش موارد بیشتر"
