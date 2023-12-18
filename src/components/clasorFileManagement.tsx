@@ -39,7 +39,7 @@ export interface IProps {
   onSearchFile?: (name?: string) => void;
   onFetchNextPage?: (hasNextPage?: boolean) => void;
   generateDownloadLink?: (file: IFile) => string;
-  fileActiveTour: boolean;
+  fileActiveTour?: boolean;
 }
 
 type IUiMode = "card" | "table";

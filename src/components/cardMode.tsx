@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { ITableProps } from "./tableMode";
 import { FaDateFromTimestamp, getColor, isFolder } from "../utils";
 import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
@@ -16,7 +16,6 @@ const CardMode = (props: ITableProps) => {
     dataReport,
     fetchingReport,
     files,
-    resetPagination,
     isFetching,
     isLoading,
     onDeleteFile,
