@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ITableProps } from "./tableMode";
 import { FaDateFromTimestamp, getColor, isFolder } from "../utils";
 import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
@@ -16,6 +16,7 @@ const CardMode = (props: ITableProps) => {
     dataReport,
     fetchingReport,
     files,
+    resetPagination,
     isFetching,
     isLoading,
     onDeleteFile,
@@ -153,7 +154,7 @@ const CardMode = (props: ITableProps) => {
                         </>
                       ) : null}
                     </div>
-                    <div className="card-action cls-pt-2 cls-px-6 cls-flex cls-gap-2 cls-justify-end">
+                    <div className="file-action card-action cls-pt-2 cls-px-6 cls-flex cls-gap-2 cls-justify-end">
                       {!isFolder(item) ? (
                         <>
                           <div className="download-file">

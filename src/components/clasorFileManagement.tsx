@@ -8,6 +8,7 @@ import CardMode from "./cardMode";
 import CropperModal from "./cropper/cropperModal";
 import PropTypes from "prop-types";
 import Breadcrumb from "./breadcrumb";
+import FileTour from "./tour";
 
 export interface IProps {
   dataReport?: IReport;
@@ -38,6 +39,7 @@ export interface IProps {
   onSearchFile?: (name?: string) => void;
   onFetchNextPage?: (hasNextPage?: boolean) => void;
   generateDownloadLink?: (file: IFile) => string;
+  fileActiveTour: boolean;
 }
 
 type IUiMode = "card" | "table";
@@ -63,6 +65,7 @@ export const ClasorFileManagement = (props: IProps) => {
     onSearchFile,
     generateDownloadLink,
     onFetchNextPage,
+    fileActiveTour
   } = props;
 
   const [uiMode, setUiMode] = useState<IUiMode>("table");
@@ -118,6 +121,7 @@ export const ClasorFileManagement = (props: IProps) => {
 
   return (
     <div className="file-management-wrapper cls-h-full cls-w-full cls-flex cls-flex-col">
+      {fileActiveTour && <FileTour />}
       <div className="cls-flex cls-h-fit cls-flex-wrap cls-items-center">
         <div className="cls-flex cls-w-full cls-items-center cls-justify-end cls-gap-2">
           <div className="cls-flex cls-flex-1">
@@ -268,4 +272,5 @@ ClasorFileManagement.propTypes = {
   onUploadFile: PropTypes.func,
   onFetchNextPage: PropTypes.func,
   generateDownloadLink: PropTypes.func,
+  fileActiveTour: PropTypes.bool,
 };
