@@ -33,6 +33,15 @@ const UploadFile = ({
   };
 
   const onUploadClick = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      return;
+    }
+    if (file.size > 50_000_000) {
+      toast.error("حجم فایل بیشتر از 50 MB است");
+      setUploadClick(false);
+      return;
+    }
     if (
       e.target.files &&
       e.target.files.length > 0 &&
@@ -54,6 +63,7 @@ const UploadFile = ({
       setShowCropper(true);
       reader.readAsDataURL(e.target.files[0]);
     } else {
+  
       if (!e.target.value) {
         setUploadClick(false);
         return;
@@ -62,14 +72,6 @@ const UploadFile = ({
 
       setUploadClick(true);
       e.preventDefault();
-      const file = e.target.files?.[0];
-
-      if (!file) {
-        return;
-      }
-      if (file.size > 50_000_000) {
-        toast.error("حجم فایل بیشتر از 50 MB است");
-      }
 
       onUploadFile?.(file, showCropper);
     }
