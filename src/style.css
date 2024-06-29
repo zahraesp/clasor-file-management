@@ -197,3 +197,13 @@ input.dp__input {
     background: #c0a0b9;
   }
 }
+
+.file-upload.shepherd-enabled.shepherd-target,
+.file-table-mode.shepherd-enabled.shepherd-target,
+.file-card-mode.shepherd-enabled.shepherd-target,
+.file-search-delete-mode.shepherd-enabled.shepherd-target {
+  @apply !cls-relative !cls-z-[2000] !cls-bg-[#673AB7];
+}
+.shepherd-enabled.shepherd-target {
+  @apply cls-relative !cls-z-[2000] !cls-bg-white;
+}

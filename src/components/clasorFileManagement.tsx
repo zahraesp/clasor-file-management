@@ -130,7 +130,7 @@ export const ClasorFileManagement = (props: IProps) => {
             <input
               type="text"
               id="searchInput"
-              className="cls-shadow cls-appearance-none cls-border cls-text-sm cls-rounded cls-py-2 cls-px-4 cls-text-gray-700 cls-leading-tight focus:cls-outline-none focus:cls-shadow-outline"
+              className="file-search cls-shadow cls-appearance-none cls-border cls-text-sm cls-rounded cls-py-2 cls-px-4 cls-text-gray-700 cls-leading-tight focus:cls-outline-none focus:cls-shadow-outline"
               placeholder="جستجوی فایل..."
               onChange={(e) => handleSearchInput(e)}
               style={{ borderTopLeftRadius: "0", borderBottomLeftRadius: "0" }}
@@ -149,7 +149,7 @@ export const ClasorFileManagement = (props: IProps) => {
               <SearchIcon className="cls-w-4 cls-h-4 cls-fill-white" />
             </button>
             <button
-              className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline cls-mx-2"
+              className="file-search-delete cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline cls-mx-2"
               onClick={handleCleanSearch}
               disabled={isCLeanDisabled}
               style={{ opacity: isCLeanDisabled ? "50%" : "100%" }}
@@ -158,7 +158,7 @@ export const ClasorFileManagement = (props: IProps) => {
             </button>
           </div>
           <button
-            className="lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
+            className="file-card-mode lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
             onClick={() => {
               setUiMode("card");
             }}
@@ -166,7 +166,7 @@ export const ClasorFileManagement = (props: IProps) => {
             <GridIcon className="cls-w-4 cls-h-4" />
           </button>
           <button
-            className="cls-btn lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
+            className="file-table-mode cls-btn lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
             onClick={() => {
               setUiMode("table");
             }}
@@ -175,7 +175,7 @@ export const ClasorFileManagement = (props: IProps) => {
           </button>
 
           <RenderIf isTrue={!!onUploadFile}>
-            <div className="file-management__upload-file cls-self-end">
+            <div className="file-upload file-management__upload-file cls-self-end">
               <UploadFile
                 onUploadFile={onUploadFile}
                 showCropper={showCropper}

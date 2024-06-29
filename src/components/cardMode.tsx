@@ -153,7 +153,7 @@ const CardMode = (props: ITableProps) => {
                         </>
                       ) : null}
                     </div>
-                    <div className="card-action cls-pt-2 cls-px-6 cls-flex cls-gap-2 cls-justify-end">
+                    <div className="file-action card-action cls-pt-2 cls-px-6 cls-flex cls-gap-2 cls-justify-end">
                       {!isFolder(item) ? (
                         <>
                           <div className="download-file">

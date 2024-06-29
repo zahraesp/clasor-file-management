@@ -130,13 +130,13 @@ const TableMode = (props: ITableProps) => {
               <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">
                 حجم
               </th>
-              <th className="cls-sticky cls-top-0 cls-bg-white cls-z-10">
+              <th className="file-action cls-sticky cls-top-0 cls-bg-white cls-z-10">
                 عملیات
               </th>
             </tr>
           </thead>
           <tbody>
-            {!!isLoading ? (
+            {(!!isLoading) ? (
               <tr>
                 <td colSpan={4}>
                   <div className="flex items-center justify-center">
@@ -215,7 +215,7 @@ const TableMode = (props: ITableProps) => {
                           </td>
                           <td>
                             {!isFolder(item) ? (
-                              <div className="file-table__actions cls-h-8 cls-flex !cls-gap-x-[21px] cls-justify-end">
+                              <div className=" file-table__actions cls-h-8 cls-flex !cls-gap-x-[21px] cls-justify-end">
                                 <div className="download-file">
                                   <RenderIf isTrue={!!link}>
                                     <div className="lib-btn !cls-p-0 cls-bg-transparent hover:cls-bg-transparent">
@@ -271,7 +271,7 @@ const TableMode = (props: ITableProps) => {
                     disabled={isFetchingNextPage}
                     onClick={fetchNextPage}
                   >
-                    {isFetchingNextPage  ? (
+                    {isFetchingNextPage ? (
                       <div className="spinner" />
                     ) : (
                       "نمایش موارد بیشتر"
