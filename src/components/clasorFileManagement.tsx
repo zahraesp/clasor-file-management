@@ -9,6 +9,8 @@ import CropperModal from "./cropper/cropperModal";
 import PropTypes from "prop-types";
 import Breadcrumb from "./breadcrumb";
 import FileTour from "./tour";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 export interface IProps {
   dataReport?: IReport;
@@ -247,6 +249,17 @@ export const ClasorFileManagement = (props: IProps) => {
           isFetching={isFetching}
         />
       </RenderIf>
+      <ToastContainer
+            position="bottom-left"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
     </div>
   );
 };
