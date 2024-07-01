@@ -69,7 +69,7 @@ export const ClasorFileManagement = (props: IProps) => {
     generateDownloadLink,
     onFetchNextPage,
     fileActiveTour,
-    onActiveTour
+    onActiveTour,
   } = props;
 
   const [uiMode, setUiMode] = useState<IUiMode>("table");
@@ -89,13 +89,14 @@ export const ClasorFileManagement = (props: IProps) => {
   const [isCLeanDisabled, setIsCLeanDisabled] = useState(true);
 
   const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
-    const name = event.currentTarget.value;
+    const name = event.currentTarget.value.replace(/^[ \t]+|[ \t]+$/gm, "");
     setName(name);
-    setIsSearchDisabled(name === "");
+    setIsSearchDisabled(name === "" || name.length < 2);
   };
 
   const handleSearchRequest = async () => {
     setResetPagination(true);
+    console.log(name)
     if (onSearchFile) {
       onSearchFile(name);
     }
@@ -125,7 +126,7 @@ export const ClasorFileManagement = (props: IProps) => {
 
   return (
     <div className="file-management-wrapper cls-h-full cls-w-full cls-flex cls-flex-col">
-    {fileActiveTour && <FileTour onActiveTour={onActiveTour} />}
+      {fileActiveTour && <FileTour onActiveTour={onActiveTour} />}
       <div className="cls-flex cls-h-fit cls-flex-wrap cls-items-center">
         <div className="cls-flex cls-w-full cls-items-center cls-justify-end cls-gap-2">
           <div className="cls-flex cls-flex-1">
@@ -135,6 +136,11 @@ export const ClasorFileManagement = (props: IProps) => {
               className="file-search cls-shadow cls-appearance-none cls-border cls-text-sm cls-rounded cls-py-2 cls-px-4 cls-text-gray-700 cls-leading-tight focus:cls-outline-none focus:cls-shadow-outline"
               placeholder="جستجوی فایل..."
               onChange={(e) => handleSearchInput(e)}
+              onKeyDown={(e) => {
+                if (!name.length && e.code === "Space") {
+                  e.preventDefault();
+                }
+              }}
               style={{ borderTopLeftRadius: "0", borderBottomLeftRadius: "0" }}
               aria-describedby="button-addon2"
             />
@@ -250,16 +256,16 @@ export const ClasorFileManagement = (props: IProps) => {
         />
       </RenderIf>
       <ToastContainer
-            position="bottom-left"
-            autoClose={2000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
+        position="bottom-left"
+        autoClose={2000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };
