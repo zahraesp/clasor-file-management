@@ -12,7 +12,7 @@ const Breadcrumb = ({ breadcrumbList, onSelectBreadItem }: IProps) => {
       <ul className="file-manager-breadcrumb cls-flex cls-gap-2 cls-items-center">
         {[...breadcrumbList].reverse().map((breadItem, index) => {
           return (
-            <li>
+            <li key={breadItem.hash}>
               {index + 1 === breadcrumbList.length ? (
                 <span>{breadItem.name}</span>
               ) : (

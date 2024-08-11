@@ -25,7 +25,7 @@
 
   body {
     background-color: white;
-    @apply cls-font-yekan-regular cls-font-normal;
+    @apply !cls-font-yekan-regular cls-font-normal;
   }
 
   * {
@@ -120,7 +120,7 @@ input.dp__input {
     @apply cls-text-sm cls-font-yekan-regular cls-text-[#919191];
   }
   .custom-table :is(th, td) {
-    @apply cls-px-5 cls-py-4 cls-border-b-[1px] cls-border-b-gray-200 cls-font-yekan-regular;
+    @apply cls-px-5 cls-py-4 cls-border-b-[1px]  cls-font-yekan-regular;
   }
   .custom-table td.actions {
     @apply cls-p-0;

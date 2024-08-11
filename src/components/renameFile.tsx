@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { IFile } from "../interface";
-import { PencilIcon, XIcon } from "../assets/svg";
+import { XIcon } from "../assets/svg";
 
 interface IProps {
   fileInfo: IFile;
   isLoading?: boolean;
   onRenameFile?: (file: IFile, newName: string) => void;
+  handleClose: () => void;
 }
 
 interface IForm {
@@ -15,19 +16,13 @@ interface IForm {
 }
 
 const RenameFile = (props: IProps) => {
-  const { fileInfo, isLoading, onRenameFile } = props;
-  const [open, setOpen] = useState(false);
+  const { fileInfo, isLoading, onRenameFile, handleClose } = props;
   // -------------------- HOOKS --------------------
 
   const form = useForm<IForm>();
 
   const { register, handleSubmit, formState, reset, clearErrors } = form;
   const { errors } = formState;
-
-  const handleClose = () => {
-    setOpen(!open);
-    reset();
-  };
 
   const handleReset = () => {
     reset();
@@ -39,35 +34,22 @@ const RenameFile = (props: IProps) => {
       toast("لطفا پسوند فایل را وارد کنید");
     }
     onRenameFile?.(fileInfo, data.newName);
+    handleClose();
   };
 
   useEffect(() => {
     if (!isLoading) {
-      setOpen(false);
       handleReset();
     }
   }, [isLoading]);
 
   return (
-    <div className="file-management__edit">
-      <button
-        className="dialog-content__button lib-btn !cls-p-0 cls-bg-transparent cls-hover:bg-transparent"
-        onClick={(e) => {
-          e.stopPropagation();
-          handleClose();
-        }}
-      >
-        <PencilIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#0D99FF]" />
-      </button>
+    <div className="file-management__edit" key={fileInfo.hash}>
       <div
         role="button"
         tabIndex={0}
-        className={` dialog-content__modal cls-modal !cls-w-full cls-cursor-default  ${
-          open ? "cls-modal-open" : ""
-        }`}
-        onClick={() => {
-          return setOpen(false);
-        }}
+        className={` dialog-content__modal cls-modal !cls-w-full cls-cursor-default cls-modal-open`}
+        onClick={handleClose}
       >
         <div
           onClick={(e) => {
@@ -119,7 +101,7 @@ const RenameFile = (props: IProps) => {
                       className="dialog-content__submit cls-btn lib-btn lib-modal-btn-success"
                       type="submit"
                     >
-                      ارسال
+                      تایید
                     </button>
                     <button
                       className="dialog-content__btns lib-btn cls-btn lib-modal-btn-cancel"

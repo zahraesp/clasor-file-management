@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { IBreadcrumb, IFile, IFolder, IReport } from "../interface";
-import { BroomIcon, GridIcon, SearchIcon, TableIcon } from "../assets/svg";
+import { GridIcon, SearchIcon, TableIcon } from "../assets/svg";
 import UploadFile from "./uploadFile";
 import RenderIf from "../extra/renderIf";
 import TableMode from "./tableMode";
@@ -11,6 +11,7 @@ import Breadcrumb from "./breadcrumb";
 import FileTour from "./tour";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import FileMobileMode from "./fileMobileMode";
 
 export interface IProps {
   dataReport?: IReport;
@@ -85,22 +86,18 @@ export const ClasorFileManagement = (props: IProps) => {
   const [resetPagination, setResetPagination] = useState(false);
 
   const [name, setName] = useState("");
-  const [isSearchDisabled, setIsSearchDisabled] = useState(true);
-  const [isCLeanDisabled, setIsCLeanDisabled] = useState(true);
 
   const handleSearchInput = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.currentTarget.value.replace(/^[ \t]+|[ \t]+$/gm, "");
     setName(name);
-    setIsSearchDisabled(name === "" || name.length < 2);
   };
 
   const handleSearchRequest = async () => {
     setResetPagination(true);
-    console.log(name)
+    console.log(name);
     if (onSearchFile) {
       onSearchFile(name);
     }
-    setIsCLeanDisabled(false);
     setTimeout(() => {
       setResetPagination(false);
     });
@@ -115,99 +112,90 @@ export const ClasorFileManagement = (props: IProps) => {
     if (onSearchFile) {
       onSearchFile();
     }
-    let inputValue = document.getElementById("searchInput") as HTMLInputElement;
-    inputValue.value = "";
-    setIsSearchDisabled(true);
-    setIsCLeanDisabled(true);
     setTimeout(() => {
       setResetPagination(false);
     });
   };
 
   return (
-    <div className="file-management-wrapper cls-h-full cls-w-full cls-flex cls-flex-col">
+    <div className="file-management-wrapper cls-bg-transparent !cls-font-yekan-regular  md:cls-bg-white cls-rounded-lg cls-h-full cls-w-full cls-flex cls-flex-col">
       {fileActiveTour && <FileTour onActiveTour={onActiveTour} />}
-      <div className="cls-flex cls-h-fit cls-flex-wrap cls-items-center">
-        <div className="cls-flex cls-w-full cls-items-center cls-justify-end cls-gap-2">
-          <div className="cls-flex cls-flex-1">
-            <input
-              type="text"
-              id="searchInput"
-              className="file-search cls-shadow cls-appearance-none cls-border cls-text-sm cls-rounded cls-py-2 cls-px-4 cls-text-gray-700 cls-leading-tight focus:cls-outline-none focus:cls-shadow-outline"
-              placeholder="جستجوی فایل..."
-              onChange={(e) => handleSearchInput(e)}
-              onKeyDown={(e) => {
-                if (!name.length && e.code === "Space") {
-                  e.preventDefault();
+      <div className="cls-hidden md:cls-flex cls-h-fit cls-flex-wrap cls-items-center">
+        <div className="cls-flex cls-w-full cls-items-center cls-justify-between cls-gap-2 cls-p-5">
+          <div
+            className="cls-flex cls-flex-grow cls-gap-2 cls-w-[100px] cls-max-w-[300px] cls-ml-2 cls-items-center cls-h-9 cls-px-3 cls-border-[1px] cls-border-[#EEF0F2] cls-bg-white cls-rounded-lg "
+            onKeyDown={(event) => {
+              if (event.code === "Enter") {
+                event.preventDefault();
+                if (name) {
+                  handleSearchRequest();
+                } else {
+                  handleCleanSearch();
                 }
-              }}
-              style={{ borderTopLeftRadius: "0", borderBottomLeftRadius: "0" }}
-              aria-describedby="button-addon2"
+              }
+            }}
+          >
+            <SearchIcon className="cls-h-5 cls-w-5 cls-fill-gray-400" />
+            <input
+              placeholder="جستجو ..."
+              className={`cls-flex cls-items-center !cls-min-w-0 
+              !cls-font-yekan-medium  focus:cls-font-yekan-medium  placeholder:cls-font-yekan-medium 
+              cls-font-normal cls-text-[13px] cls-leading-[18.2px] -cls-tracking-[0.13px]
+              placeholder:cls-text-gray-300 cls-text-right text-sm cls-pr-0 cls-outline-none cls-overflow-hidden
+               cls-border-none focus:cls-border-none !cls-w-auto`}
+              onChange={(e) => handleSearchInput(e)}
+              value={name}
             />
-            <button
-              className="cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline"
-              onClick={handleSearchRequest}
-              disabled={isSearchDisabled}
-              style={{
-                opacity: isSearchDisabled ? "50%" : "100%",
-                borderTopRightRadius: "0",
-                borderBottomRightRadius: "0",
-              }}
-            >
-              <SearchIcon className="cls-w-4 cls-h-4 cls-fill-white" />
-            </button>
-            <button
-              className="file-search-delete cls-bg-[#673AB7] lib-btn cls-text-white cls-text-xs cls-py-2 cls-px-4 cls-rounded focus:cls-outline-none focus:cls-shadow-outline cls-mx-2"
-              onClick={handleCleanSearch}
-              disabled={isCLeanDisabled}
-              style={{ opacity: isCLeanDisabled ? "50%" : "100%" }}
-            >
-              <BroomIcon className="cls-w-4 cls-h-4 cls-fill-white" />
-            </button>
           </div>
-          <button
-            className="file-card-mode lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
-            onClick={() => {
-              setUiMode("card");
-            }}
-          >
-            <GridIcon className="cls-w-4 cls-h-4" />
-          </button>
-          <button
-            className="file-table-mode cls-btn lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
-            onClick={() => {
-              setUiMode("table");
-            }}
-          >
-            <TableIcon className="cls-w-4 cls-h-4" />
-          </button>
-
-          <RenderIf isTrue={!!onUploadFile}>
-            <div className="file-upload file-management__upload-file cls-self-end">
-              <UploadFile
-                onUploadFile={onUploadFile}
-                showCropper={showCropper}
-                setShowCropper={setShowCropper}
-                setLocalImage={setLocalImage}
-                processCount={processCount}
-                isLoading={isLoading}
-                isError={isError}
-              />
+          <div className="cls-flex cls-items-center cls-gap-1">
+            <div className="cls-flex cls-gap-1">
+              <button
+                className="file-card-mode lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
+                onClick={() => {
+                  setUiMode("card");
+                }}
+              >
+                <GridIcon className="cls-w-4 cls-h-4" />
+              </button>
+              <button
+                className="file-table-mode cls-btn lib-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7] cls-text-white"
+                onClick={() => {
+                  setUiMode("table");
+                }}
+              >
+                <TableIcon className="cls-w-4 cls-h-4" />
+              </button>
             </div>
-          </RenderIf>
+
+            <RenderIf isTrue={!!onUploadFile}>
+              <div className="file-upload file-management__upload-file cls-self-end">
+                <UploadFile
+                  onUploadFile={onUploadFile}
+                  showCropper={showCropper}
+                  setShowCropper={setShowCropper}
+                  setLocalImage={setLocalImage}
+                  processCount={processCount}
+                  isLoading={isLoading}
+                  isError={isError}
+                />
+              </div>
+            </RenderIf>
+          </div>
         </div>
       </div>
-      <div className="file-management__file-list cls-flex cls-flex-col cls-flex-grow cls-max-h-full cls-h-[calc(100%-50px)] cls-pt-5">
-        {files?.pages.map((page) => {
-          return (
-            <RenderIf isTrue={!!page?.breadcrumb?.length}>
+      <div className="cls-hidden md:cls-flex file-management__file-list cls-flex-col cls-flex-grow cls-max-h-full cls-h-[calc(100%-80px)] cls-pb-5">
+        {files?.pages.map((page, index) => (
+          <div key={`breadcrumb-${index}`}>
+            <RenderIf
+              isTrue={!!page?.breadcrumb?.length && page.breadcrumb.length > 1}
+            >
               <Breadcrumb
-                breadcrumbList={page.breadcrumb!}
+                breadcrumbList={page?.breadcrumb!}
                 onSelectBreadItem={onSelectBreadItem}
               />
             </RenderIf>
-          );
-        })}
+          </div>
+        ))}
         <RenderIf isTrue={uiMode === "table"}>
           <TableMode
             dataReport={dataReport}
@@ -242,6 +230,20 @@ export const ClasorFileManagement = (props: IProps) => {
           />
         </RenderIf>
       </div>
+
+      <div className="md:cls-hidden cls-pt-4 cls-grid cls-h-full cls-grid-cols-1 sm:cls-grid-cols-2 md:cls-grid-cols-2 cls-gap-4 cls-flex-wrap">
+        <FileMobileMode
+          files={files}
+          isFetching={isFetching}
+          isLoading={isLoading}
+          resetPagination={resetPagination}
+          onRenameFile={onRenameFile}
+          onDeleteFile={onDeleteFile}
+          generateDownloadLink={generateDownloadLink}
+          onFetchNextPage={onFetchNextPage}
+        />
+      </div>
+
       <RenderIf isTrue={showCropper}>
         <CropperModal
           cropMode={cropMode}

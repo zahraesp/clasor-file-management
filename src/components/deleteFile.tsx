@@ -1,50 +1,27 @@
-import { useEffect, useState } from "react";
 import { IFile } from "../interface";
-import { TrashIcon, XIcon } from "../assets/svg";
+import { XIcon } from "../assets/svg";
 
 interface IProps {
   fileInfo: IFile;
   isLoading?: boolean;
   onDeleteFile?: (file: IFile) => void;
+  handleClose: () => void;
 }
 const DeleteFile = (props: IProps) => {
-  const { fileInfo, isLoading, onDeleteFile } = props;
-  const [open, setOpen] = useState(false);
-
-  const handleClose = () => {
-    setOpen(!open);
-  };
+  const { fileInfo, isLoading, onDeleteFile, handleClose } = props;
 
   const handleDelete = async () => {
     onDeleteFile?.(fileInfo);
+    handleClose();
   };
-
-  useEffect(() => {
-    if (!isLoading) {
-      setOpen(false);
-    }
-  }, [isLoading]);
 
   return (
     <div className="file-management__delete">
-      <button
-        className="dialog-content__button lib-btn !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
-        onClick={(e) => {
-          e.stopPropagation();
-          return setOpen(true);
-        }}
-      >
-        <TrashIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#F56C6C]" />
-      </button>
       <div
         role="button"
         tabIndex={0}
-        className={`dialog-content__modal !cls-w-full cls-modal cls-cursor-default  ${
-          open ? "cls-modal-open" : ""
-        }`}
-        onClick={() => {
-          return setOpen(false);
-        }}
+        className={`dialog-content__modal !cls-w-full cls-modal cls-cursor-default cls-modal-open`}
+        onClick={handleClose}
       >
         <div
           onClick={(e) => {
