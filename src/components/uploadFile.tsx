@@ -116,11 +116,11 @@ const UploadFile = ({
         <>
           <label
             htmlFor="file-upload"
-            className="dialog-content__submit lib-btn cls-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7]"
+            className="dialog-content__submit lib-btn cls-btn cls-bg-transparent cls-border-[1px] cls-border-[#EEF0F2] hover:cls-bg-transparent"
           >
             <i className="fa fa-cloud-upload" />
-            <UploadFileIcon className="cls-h-4 cls-w-4 cls-fill-[#0C0E10] cls-ml-2 " />
-            <span className="cls-text-white cls-font-normal">
+            <UploadFileIcon className="cls-h-4 cls-w-4 cls-stroke-[#0C0E10] cls-ml-2 " />
+            <span className="cls-text-[#0C0E10] cls-font-normal">
             بارگذاری فایل
             </span>
           </label>

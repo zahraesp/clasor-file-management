@@ -150,7 +150,7 @@ export const ClasorFileManagement = (props: IProps) => {
           <div className="cls-flex cls-items-center cls-gap-1">
             <div className="cls-flex cls-gap-1">
               <button
-                className="file-card-mode lib-btn cls-bg-[#EEF0F2] hover:cls-bg-[#EEF0F2] cls-text-[#0C0E10]"
+                className="file-card-mode lib-btn cls-border-[1px] cls-border-[#EEF0F2] cls-bg-transparent hover:cls-bg-transparent cls-text-[#0C0E10]"
                 onClick={() => {
                   setUiMode("card");
                 }}
@@ -158,7 +158,7 @@ export const ClasorFileManagement = (props: IProps) => {
                 <GridIcon className="cls-w-4 cls-h-4" />
               </button>
               <button
-                className="file-table-mode cls-btn lib-btn cls-bg-[#EEF0F2] hover:cls-bg-[#EEF0F2] cls-text-[#0C0E10]"
+                className="file-table-mode cls-btn lib-btn cls-border-[1px] cls-border-[#EEF0F2] cls-bg-transparent hover:cls-bg-transparent cls-text-[#0C0E10]"
                 onClick={() => {
                   setUiMode("table");
                 }}
