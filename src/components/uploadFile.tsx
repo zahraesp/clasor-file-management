@@ -119,7 +119,7 @@ const UploadFile = ({
             className="dialog-content__submit lib-btn cls-btn cls-bg-[#673AB7] hover:cls-bg-[#673AB7]"
           >
             <i className="fa fa-cloud-upload" />
-            <UploadFileIcon className="cls-h-4 cls-w-4 cls-fill-white cls-ml-2 " />
+            <UploadFileIcon className="cls-h-4 cls-w-4 cls-fill-[#0C0E10] cls-ml-2 " />
             <span className="cls-text-white cls-font-normal">
             بارگذاری فایل
             </span>

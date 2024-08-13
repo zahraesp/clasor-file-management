@@ -105,7 +105,7 @@ const TableMode = (props: ITableProps) => {
   return (
     <div className="cls-px-5 cls-rounded-lg cls-flex cls-flex-col cls-flex-grow cls-overflow-auto">
       <div
-        className={`cls-border-[1px] border-[#EEF0F2] cls-overflow-auto cls-bg-white cls-rounded-[4px] cls-flex-grow cls-block ${
+        className={`cls-border-[1px] cls-border-[#EEF0F2] cls-overflow-auto cls-bg-white cls-rounded-[4px] cls-flex-grow cls-block ${
           isLoading ? "cls-min-h-16" : "cls-block"
         }`}
       >
