@@ -109,7 +109,7 @@ const UploadFile = ({
               <span className="cls-mr-2">{processCount}%</span>
             </div>
           ) : (
-            <span className="cls-text-[#0C0E10] cls-font-normal">
+            <span className="upload-file cls-text-[#0C0E10] cls-font-normal">
               بارگذاری فایل
             </span>
           )}
