@@ -63,7 +63,6 @@ const UploadFile = ({
       setShowCropper(true);
       reader.readAsDataURL(e.target.files[0]);
     } else {
-  
       if (!e.target.value) {
         setUploadClick(false);
         return;
@@ -97,42 +96,32 @@ const UploadFile = ({
       action="/"
       ref={formRef}
     >
-      {uploadClick ? (
-        <div className="upload-file__progressBar lib-progressBar !cls-bg-white">
-          <p className=" cls-color-emerald-200 color-emerald-200 cls-w-full cls-ml-2 cls-text-xs cls-flex cls-pr-2 cls-items-center">
-            <span className="spinner cls-ml-2 cls-mr-1" />
-            <span>{textStatus}</span>
-          </p>
-          <div className="cls-flex cls-items-center">
-            <progress
-              className="cls-progress cls-progress-success cls-w-56"
-              value={processCount}
-              max="100"
-            />
-            <span className="cls-mr-2">{processCount}%</span>
-          </div>
-        </div>
-      ) : (
-        <>
-          <label
-            htmlFor="file-upload"
-            className="dialog-content__submit lib-btn cls-btn cls-bg-transparent cls-border-[1px] cls-border-[#EEF0F2] hover:cls-bg-transparent"
-          >
-            <i className="fa fa-cloud-upload" />
-            <UploadFileIcon className="cls-h-4 cls-w-4 cls-stroke-[#0C0E10] cls-ml-2 " />
+      <>
+        <label
+          htmlFor="file-upload"
+          className="dialog-content__submit lib-btn cls-btn cls-bg-transparent !cls-border-solid cls-border-[1px] cls-border-[#EEF0F2] hover:cls-bg-transparent"
+        >
+          <i className="fa fa-cloud-upload" />
+          <UploadFileIcon className="cls-h-4 cls-w-4 cls-stroke-[#0C0E10] cls-ml-2 " />
+          {uploadClick ? (
+            <div className="cls-flex cls-items-center">
+              <span>{textStatus}</span>
+              <span className="cls-mr-2">{processCount}%</span>
+            </div>
+          ) : (
             <span className="cls-text-[#0C0E10] cls-font-normal">
-            بارگذاری فایل
+              بارگذاری فایل
             </span>
-          </label>
-          <input
-            id="file-upload"
-            type="file"
-            name="image-uploader"
-            // accept="image/*"
-            onChange={onUploadClick}
-          />
-        </>
-      )}
+          )}
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          name="image-uploader"
+          // accept="image/*"
+          onChange={onUploadClick}
+        />
+      </>
     </form>
   );
 };

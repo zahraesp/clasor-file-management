@@ -44,6 +44,7 @@ export interface IProps {
   generateDownloadLink?: (file: IFile) => string;
   fileActiveTour?: boolean;
   onActiveTour?: (activeTour: boolean) => void;
+  cardMode?: boolean;
 }
 
 type IUiMode = "card" | "table";
@@ -71,6 +72,7 @@ export const ClasorFileManagement = (props: IProps) => {
     onFetchNextPage,
     fileActiveTour,
     onActiveTour,
+    cardMode,
   } = props;
 
   const [uiMode, setUiMode] = useState<IUiMode>("table");
@@ -148,24 +150,26 @@ export const ClasorFileManagement = (props: IProps) => {
             />
           </div>
           <div className="cls-flex cls-items-center cls-gap-1">
-            <div className="cls-flex cls-gap-1">
-              <button
-                className="file-card-mode lib-btn cls-border-[1px] cls-border-[#EEF0F2] cls-bg-transparent hover:cls-bg-transparent cls-text-[#0C0E10]"
-                onClick={() => {
-                  setUiMode("card");
-                }}
-              >
-                <GridIcon className="cls-w-4 cls-h-4" />
-              </button>
-              <button
-                className="file-table-mode cls-btn lib-btn cls-border-[1px] cls-border-[#EEF0F2] cls-bg-transparent hover:cls-bg-transparent cls-text-[#0C0E10]"
-                onClick={() => {
-                  setUiMode("table");
-                }}
-              >
-                <TableIcon className="cls-w-4 cls-h-4" />
-              </button>
-            </div>
+            {cardMode ? (
+              <div className="cls-flex cls-gap-1">
+                <button
+                  className="file-card-mode lib-btn !cls-border-[1px] !cls-border-solid !cls-border-[#EEF0F2] cls-bg-transparent hover:cls-bg-transparent cls-text-[#0C0E10]"
+                  onClick={() => {
+                    setUiMode("card");
+                  }}
+                >
+                  <GridIcon className="cls-w-4 cls-h-4" />
+                </button>
+                <button
+                  className="file-table-mode cls-btn lib-btn !cls-border-solid cls-border-[1px] cls-border-[#EEF0F2] cls-bg-transparent hover:cls-bg-transparent cls-text-[#0C0E10]"
+                  onClick={() => {
+                    setUiMode("table");
+                  }}
+                >
+                  <TableIcon className="cls-w-4 cls-h-4" />
+                </button>
+              </div>
+            ) : null}
 
             <RenderIf isTrue={!!onUploadFile}>
               <div className="file-upload file-management__upload-file cls-self-end">
@@ -231,7 +235,7 @@ export const ClasorFileManagement = (props: IProps) => {
         </RenderIf>
       </div>
 
-      <div className="md:cls-hidden cls-pt-4 cls-grid cls-h-full cls-grid-cols-1 sm:cls-grid-cols-2 md:cls-grid-cols-2 cls-gap-4 cls-flex-wrap">
+      <div className="md:cls-hidden cls-pt-4 cls-grid cls-h-full cls-grid-cols-1 sm:cls-grid-cols-2 md:cls-grid-cols-2 cls-gap-4 cls-flex-wrap cls-grid-rows-[min-content]">
         <FileMobileMode
           files={files}
           isFetching={isFetching}
@@ -297,4 +301,5 @@ ClasorFileManagement.propTypes = {
   generateDownloadLink: PropTypes.func,
   fileActiveTour: PropTypes.bool,
   onActiveTour: PropTypes.func,
+  cardMode: PropTypes.bool,
 };

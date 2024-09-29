@@ -102,12 +102,12 @@ const FileMobileMode = (props: ITableProps) => {
                   return (
                     <div
                       key={`mobile-mode-${item.hash}`}
-                      className={`cls-flex cls-flex-col cls-h-auto hover:cls-bg-[#F6F7F8] active:!cls-bg-[#F6F7F8] hover:cls-cursor-pointer 
-                    cls-rounded-lg cls-bg-white cls-border-[1px] cls-border-[#EEF0F2] cls-shadow-sm
+                      className={`cls-flex cls-flex-col cls-h-auto cls-max-h-[158px] hover:cls-bg-[#F1EDF7] active:!cls-bg-[#F1EDF7] hover:cls-cursor-pointer 
+                    cls-rounded-lg cls-bg-white cls-border-[1px] 
                      ${
                        selectedFile?.hash === item.hash
-                         ? "!cls-bg-[#F6F7F8]"
-                         : "cls-bg-transparent"
+                         ? "!cls-bg-[#F1EDF7] !cls-border-[#7446B2] cls-shadow-custom"
+                         : "cls-bg-transparent cls-border-[#EEF0F2] cls-shadow-sm"
                      }`}
                       role="button"
                       tabIndex={0}

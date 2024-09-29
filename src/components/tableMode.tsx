@@ -172,17 +172,17 @@ const TableMode = (props: ITableProps) => {
                         return (
                           <tr
                             key={`table-mode-${item.hash}`}
-                            className={`hover:cls-bg-[#F6F7F8] active:!cls-bg-[#F6F7F8] hover:cls-cursor-pointer !cls-max-h-16 
+                            className={`hover:cls-bg-[#F1EDF7] active:!cls-bg-[#F1EDF7] hover:cls-cursor-pointer !cls-max-h-16 
                           ${
                             selectedFile?.hash === item.hash
-                              ? "!cls-bg-[#F6F7F8]"
-                              : "cls-bg-transparent"
+                              ? "!cls-bg-[#F1EDF7]"
+                              : "!cls-bg-transparent"
                           }`}
                             onClick={() => {
                               if (hasPreview && !isFolder(item)) {
                                 setOpenPreviewFile(true);
                               }
-                              return onSelect?.(item);
+                              onSelect?.(item);
                             }}
                           >
                             <td>
@@ -214,7 +214,7 @@ const TableMode = (props: ITableProps) => {
                                 </span>
                               </div>
                             </td>
-                            <td>
+                            <td className="!cls-p-0">
                               {!isFolder(item) ? (
                                 <span className="cls-px-3 cls-py-[5px] cls-font-yekan-medium cls-text-xs cls-text-[#919191] ">
                                   {FaDateFromTimestamp(item.updated)}
@@ -263,7 +263,7 @@ const TableMode = (props: ITableProps) => {
                                               e.stopPropagation();
                                             }}
                                           >
-                                            <div className="cls-flex cls-items-center cls-gap-2">
+                                            <div className="cls-flex cls-items-center cls-gap-2 cls-pl-0">
                                               <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#667585]" />
                                               <p className="!cls-text-[#667585] cls-font-yekan-medium !cls-text-[12px]">
                                                 دانلود فایل
@@ -284,7 +284,7 @@ const TableMode = (props: ITableProps) => {
                                           }}
                                         >
                                           <PencilIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#667585]" />
-                                          <p className="!cls-text-[rgb(102,117,133)] cls-font-yekan-medium  cls-text-[12px]">
+                                          <p className="!cls-text-[#667585] cls-font-yekan-medium  cls-text-[12px]">
                                             ویرایش فایل
                                           </p>
                                         </div>
