@@ -1,7 +1,7 @@
 {
   "name": "cls-file-management",
   "private": false,
-  "version": "0.6.0",
+  "version": "0.6.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -24,6 +24,7 @@
       "import": "./dist/style.css",
       "require": "./dist/style.css"
     }
+    
   },
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
