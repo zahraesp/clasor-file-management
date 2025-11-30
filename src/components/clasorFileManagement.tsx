@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { IBreadcrumb, IFile, IFolder, IReport } from "../interface";
 import { GridIcon, SearchIcon, TableIcon } from "../assets/svg";
 import UploadFile from "./uploadFile";
@@ -10,7 +10,6 @@ import PropTypes from "prop-types";
 import Breadcrumb from "./breadcrumb";
 import FileTour from "./tour";
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
 import FileMobileMode from "./fileMobileMode";
 
 export interface IProps {
@@ -31,13 +30,17 @@ export interface IProps {
   hasPreview?: boolean;
   hasNextPage?: boolean;
   processCount?: number;
-  getDataType?: (dType: string) => void;
+  getDataType?: (params: {
+    order: "NAME" | "CREATED" | "UPDATED" | "SIZE" | "TYPE" | null;
+    isDesc: boolean;
+  }) => void;
   onSelectFile?: (file: IFile) => void;
   onSelectFolder?: (folder: IFolder) => void;
   onSelectBreadItem?: (breadItem: IBreadcrumb) => void;
   onChangePage?: (page: number) => void;
   onRenameFile?: (file: IFile, newName: string) => void;
   onDeleteFile?: (file: IFile) => void;
+  onPublicFile?: (file: IFile) => void;
   onUploadFile?: (file: any, showCropper: boolean) => void;
   onSearchFile?: (name?: string) => void;
   onFetchNextPage?: (hasNextPage?: boolean) => void;
@@ -67,6 +70,7 @@ export const ClasorFileManagement = (props: IProps) => {
     onRenameFile,
     onDeleteFile,
     onUploadFile,
+    onPublicFile,
     onSearchFile,
     generateDownloadLink,
     onFetchNextPage,
@@ -104,10 +108,6 @@ export const ClasorFileManagement = (props: IProps) => {
       setResetPagination(false);
     });
   };
-
-  useEffect(() => {
-    getDataType?.(uiMode);
-  }, [uiMode]);
 
   const handleCleanSearch = async () => {
     setResetPagination(true);
@@ -213,8 +213,10 @@ export const ClasorFileManagement = (props: IProps) => {
             onSelectFolder={onSelectFolder}
             onRenameFile={onRenameFile}
             onDeleteFile={onDeleteFile}
+            onPublicFile={onPublicFile}
             generateDownloadLink={generateDownloadLink}
             onFetchNextPage={onFetchNextPage}
+            getDataType={getDataType}
           />
         </RenderIf>
         <RenderIf isTrue={uiMode === "card"}>
@@ -229,8 +231,10 @@ export const ClasorFileManagement = (props: IProps) => {
             onSelectFolder={onSelectFolder}
             onRenameFile={onRenameFile}
             onDeleteFile={onDeleteFile}
+            onPublicFile={onPublicFile}
             generateDownloadLink={generateDownloadLink}
             onFetchNextPage={onFetchNextPage}
+            getDataType={getDataType}
           />
         </RenderIf>
       </div>
@@ -243,6 +247,7 @@ export const ClasorFileManagement = (props: IProps) => {
           resetPagination={resetPagination}
           onRenameFile={onRenameFile}
           onDeleteFile={onDeleteFile}
+          onPublicFile={onPublicFile}
           generateDownloadLink={generateDownloadLink}
           onFetchNextPage={onFetchNextPage}
         />

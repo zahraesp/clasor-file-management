@@ -1,9 +1,11 @@
 
+import { ReactElement } from 'react';
+
 interface IProps{
-    children: JSX.Element;
+    children: ReactElement;
     isTrue: boolean;
 }
-const RenderIf = ({ children, isTrue }: IProps) => {
+const RenderIf = ({ children, isTrue }: IProps): ReactElement | null => {
   return isTrue ? children : null;
 };
 

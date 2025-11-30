@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { UploadFileIcon } from "../assets/svg";
-import { toast } from "react-toastify";
 import { ILocalImage } from "../interface";
+import { toast } from "react-toastify";
+import { extractFileFromUnknown, validateBeforeUpload } from "../utils/uploadGuards";
 
 interface IProps {
   onUploadFile?: (file: any, showCropper: boolean) => void;
@@ -33,46 +34,65 @@ const UploadFile = ({
   };
 
   const onUploadClick = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) {
+    const item = e.target.files?.[0];
+    if (!item) {
       return;
     }
-    if (file.size > 50_000_000) {
-      toast.error("حجم فایل بیشتر از 50 MB است");
-      setUploadClick(false);
-      return;
-    }
-    if (
-      e.target.files &&
-      e.target.files.length > 0 &&
-      /\.(jpg|jpeg|png|gif)$/i.test(e.target.files[0].name)
-    ) {
-      const fileName = e.target.files[0].name;
-      const fileType = e.target.files[0].type;
-      const originalImage = e.target.files[0];
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        const image = reader.result;
-        setLocalImage({
-          imageAddress: image as string,
-          imageName: fileName,
-          imageType: fileType,
-          originalImage,
-        });
-      });
-      setShowCropper(true);
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
-      if (!e.target.value) {
-        setUploadClick(false);
-        return;
+    // if (file.size > 50_000_000) {
+    //   toast.error("حجم فایل بیشتر از 50 MB است");
+    //   setUploadClick(false);
+    //   return;
+    // }
+
+    try {
+      let fileToUpload = item;
+      const file = await extractFileFromUnknown(item);
+      if (file) {
+        const { valid, message, sanitizedFile } = await validateBeforeUpload(
+          file
+        );
+        if (!valid) {
+          toast.error(message || "آپلود این فایل مجاز نیست");
+          return;
+        }
+        if (sanitizedFile) {
+          fileToUpload = sanitizedFile;
+        }
       }
-      setTextStatus("درحال بارگذاری");
 
-      setUploadClick(true);
-      e.preventDefault();
+      if (
+        e.target.files &&
+        e.target.files.length > 0 &&
+        /\.(jpg|jpeg|png|gif)$/i.test(e.target.files[0].name)
+      ) {
+        const fileName = e.target.files[0].name;
+        const fileType = e.target.files[0].type;
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+          const image = reader.result;
+          setLocalImage({
+            imageAddress: image as string,
+            imageName: fileName,
+            imageType: fileType,
+            originalImage: fileToUpload,
+          });
+        });
+        setShowCropper(true);
+        reader.readAsDataURL(fileToUpload);
+      } else {
+        if (!e.target.value) {
+          setUploadClick(false);
+          return;
+        }
+        setTextStatus("درحال بارگذاری");
 
-      onUploadFile?.(file, showCropper);
+        setUploadClick(true);
+        e.preventDefault();
+
+        onUploadFile?.(fileToUpload, showCropper);
+      }
+    } catch (error) {
+      console.error("UploadFile error in clasor-file-management:", error);
     }
   };
 

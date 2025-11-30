@@ -8,6 +8,7 @@ import DeleteFile from "./deleteFile";
 import {
   DownloadIcon,
   FolderIcon,
+  GlobeIcon,
   MoreDotIcon,
   PencilIcon,
   TrashIcon,
@@ -17,6 +18,7 @@ import RenderIf from "../extra/renderIf";
 import ProgressBar from "../extra/progressBar";
 import { useInView } from "react-intersection-observer";
 import EmptyList from "./emptyList";
+import PublicFile from "./publicFile";
 
 const CardMode = (props: ITableProps) => {
   const {
@@ -30,6 +32,7 @@ const CardMode = (props: ITableProps) => {
     hasPreview,
     onSelectFile,
     onSelectFolder,
+    onPublicFile,
     generateDownloadLink,
     onFetchNextPage,
   } = props;
@@ -41,6 +44,7 @@ const CardMode = (props: ITableProps) => {
   const { ref, inView } = useInView();
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openPublicDialog, setOpenPublicDialog] = useState(false);
   const [fileMenu, setFileMenu] = useState<IFile | null>(null);
 
   const onSelect = (item: IFile | IFolder) => {
@@ -192,14 +196,14 @@ const CardMode = (props: ITableProps) => {
                               <RenderIf isTrue={!!link}>
                                 <li className="active:!cls-bg-transparent px-1">
                                   <a
-                                    className="!cls-text-[#667585] !cls-text-[12px] active:!cls-bg-transparent cls-pl-0"
+                                    className="!cls-text-[#667585] !cls-text-[12px] active:!cls-bg-transparent cls-px-[1px]"
                                     href={link}
                                     download
                                     onClick={(e) => {
                                       e.stopPropagation();
                                     }}
                                   >
-                                    <div className="cls-flex cls-items-center cls-gap-2">
+                                    <div className="cls-flex cls-items-center cls-gap-2 cls-px-[1px]">
                                       <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#667585]" />
                                       <p className="!cls-text-[#667585] cls-font-yekan-medium !cls-text-[12px]">
                                         دانلود فایل
@@ -210,7 +214,24 @@ const CardMode = (props: ITableProps) => {
                               </RenderIf>
                               <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
                                 <div
-                                  className="cls-flex cls-items-center cls-gap-2 cls-pl-0"
+                                  className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
+                                  role="button"
+                                  tabIndex={0}
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    setOpenPublicDialog(true);
+                                    setFileMenu(item);
+                                  }}
+                                >
+                                  <GlobeIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#667585]" />
+                                  <p className="!cls-text-[#667585] cls-font-yekan-medium cls-text-[12px] cls-truncate">
+                                    عمومی کردن فایل
+                                  </p>
+                                </div>
+                              </li>
+                              <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
+                                <div
+                                  className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
                                   role="button"
                                   tabIndex={0}
                                   onClick={(event) => {
@@ -220,14 +241,14 @@ const CardMode = (props: ITableProps) => {
                                   }}
                                 >
                                   <PencilIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#667585]" />
-                                  <p className="!cls-text-[rgb(102,117,133)] cls-font-yekan-medium  cls-text-[12px]">
+                                  <p className="!cls-text-[#667585] cls-font-yekan-medium  cls-text-[12px]">
                                     ویرایش فایل
                                   </p>
                                 </div>
                               </li>
                               <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
                                 <div
-                                  className="cls-flex cls-items-center cls-gap-2 cls-pl-0"
+                                  className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
                                   role="button"
                                   tabIndex={0}
                                   onClick={(event) => {
@@ -327,6 +348,17 @@ const CardMode = (props: ITableProps) => {
           isLoading={isLoading}
           handleClose={() => {
             setOpenDeleteDialog(false);
+          }}
+        />
+      )}
+      {openPublicDialog && fileMenu && (
+        <PublicFile
+          key={fileMenu.hash}
+          fileInfo={fileMenu}
+          onPublicFile={onPublicFile}
+          isLoading={isLoading}
+          handleClose={() => {
+            setOpenPublicDialog(false);
           }}
         />
       )}

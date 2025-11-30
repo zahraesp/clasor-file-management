@@ -34,11 +34,14 @@ const RenameFile = (props: IProps) => {
       toast("لطفا پسوند فایل را وارد کنید");
     }
     onRenameFile?.(fileInfo, data.newName);
-    handleClose();
+    if (isLoading === false) {
+      handleClose();
+      handleReset();
+    }
   };
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!!isLoading) {
       handleReset();
     }
   }, [isLoading]);

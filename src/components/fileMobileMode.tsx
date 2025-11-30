@@ -4,6 +4,7 @@ import { ITableProps } from "./tableMode";
 import {
   DownloadIcon,
   FolderIcon,
+  GlobeIcon,
   MoreDotIcon,
   PencilIcon,
   TrashIcon,
@@ -16,6 +17,7 @@ import EmptyList from "./emptyList";
 import RenderIf from "../extra/renderIf";
 import { IFile, IFolder } from "../interface";
 import PreviewFileModal from "./previewModal";
+import PublicFile from "./publicFile";
 
 const FileMobileMode = (props: ITableProps) => {
   const {
@@ -24,6 +26,7 @@ const FileMobileMode = (props: ITableProps) => {
     isFetching,
     onRenameFile,
     onDeleteFile,
+    onPublicFile,
     generateDownloadLink,
     onFetchNextPage,
     hasPreview,
@@ -33,6 +36,7 @@ const FileMobileMode = (props: ITableProps) => {
 
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openPublicDialog, setOpenPublicDialog] = useState(false);
   const [fileMenu, setFileMenu] = useState<IFile | null>(null);
   const [isFetchingNextPage, setIsFetchingNextPage] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -115,7 +119,7 @@ const FileMobileMode = (props: ITableProps) => {
                         if (hasPreview && !isFolder(item)) {
                           setOpenPreviewFile(true);
                         }
-                         onSelect?.(item);
+                        onSelect?.(item);
                       }}
                     >
                       <div className="cls-flex cls-p-4 cls-justify-between cls-items-center">
@@ -162,14 +166,14 @@ const FileMobileMode = (props: ITableProps) => {
                             <RenderIf isTrue={!!link}>
                               <li className="active:!cls-bg-transparent px-1">
                                 <a
-                                  className="!cls-text-[#667585] !cls-text-[12px] active:!cls-bg-transparent cls-pl-0"
+                                  className="!cls-text-[#667585] !cls-text-[12px] active:!cls-bg-transparent cls-px-[1px]"
                                   href={link}
                                   download
                                   onClick={(e) => {
                                     e.stopPropagation();
                                   }}
                                 >
-                                  <div className="cls-flex cls-items-center cls-gap-2">
+                                  <div className="cls-flex cls-items-center cls-gap-2 cls-px-[1px]">
                                     <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#667585]" />
                                     <p className="!cls-text-[#667585] cls-font-yekan-medium !cls-text-[12px]">
                                       دانلود فایل
@@ -180,7 +184,24 @@ const FileMobileMode = (props: ITableProps) => {
                             </RenderIf>
                             <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
                               <div
-                                className="cls-flex cls-items-center cls-gap-2 cls-pl-0"
+                                className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
+                                role="button"
+                                tabIndex={0}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  setOpenPublicDialog(true);
+                                  setFileMenu(item);
+                                }}
+                              >
+                                <GlobeIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#667585]" />
+                                <p className="!cls-text-[#667585] cls-font-yekan-medium cls-text-[12px] cls-truncate">
+                                  عمومی کردن فایل
+                                </p>
+                              </div>
+                            </li>
+                            <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
+                              <div
+                                className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
                                 role="button"
                                 tabIndex={0}
                                 onClick={(event) => {
@@ -190,14 +211,14 @@ const FileMobileMode = (props: ITableProps) => {
                                 }}
                               >
                                 <PencilIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#667585]" />
-                                <p className="!cls-text-[rgb(102,117,133)] cls-font-yekan-medium  cls-text-[12px]">
+                                <p className="!cls-text-[#667585] cls-font-yekan-medium  cls-text-[12px]">
                                   ویرایش فایل
                                 </p>
                               </div>
                             </li>
                             <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
                               <div
-                                className="cls-flex cls-items-center cls-gap-2 cls-pl-0"
+                                className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
                                 role="button"
                                 tabIndex={0}
                                 onClick={(event) => {
@@ -305,6 +326,18 @@ const FileMobileMode = (props: ITableProps) => {
           isLoading={isLoading}
           handleClose={() => {
             setOpenDeleteDialog(false);
+          }}
+        />
+      )}
+
+      {openPublicDialog && fileMenu && (
+        <PublicFile
+          key={fileMenu.hash}
+          fileInfo={fileMenu}
+          onPublicFile={onPublicFile}
+          isLoading={isLoading}
+          handleClose={() => {
+            setOpenPublicDialog(false);
           }}
         />
       )}

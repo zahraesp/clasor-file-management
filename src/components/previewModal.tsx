@@ -1,10 +1,16 @@
-import React from "react";
-import { XIcon } from "../assets/svg";
+import { Dispatch, SetStateAction } from "react";
+import {
+  Dialog,
+  DialogBody,
+  DialogHeader,
+  Typography,
+} from "@material-tailwind/react";
 import RenderIf from "../extra/renderIf";
 import { IFile } from "../interface";
+import CloseButton from "./buttons/closeButton";
 
 interface IProps {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: Dispatch<SetStateAction<boolean>>;
   selectedFile: IFile;
   generateDownloadLink?: (file: IFile) => string;
 }
@@ -57,51 +63,57 @@ const PreviewFileModal = ({
   const format = checkFormat();
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      className="dialog-content__modal cls-modal cls-cursor-default !cls-w-full cls-modal-open cls-h-full"
-      onClick={close}
+    <Dialog
+      placeholder=""
+      size="lg"
+      open={true}
+      handler={close}
+      className="file-management__preview"
     >
-      <div
-        onClick={(e) => {
-          return e.stopPropagation();
-        }}
-        role="button"
-        tabIndex={-1}
-        className="file-management__delete-modal cls-modal-box cls-max-w-[32rem] cls-bg-white !cls-w-full cls-p-0 cls-overflow-hidden cls-text-right cls-cursor-default cls-mt-10"
+      <DialogHeader
+        placeholder=""
+        className="flex items-center justify-between"
       >
-        <div className=" cls-overflow-auto cls-modal-box cls-max-w-[32rem] cls-bg-white !cls-w-full cls-h-96">
-          <div className="cls-flex cls-flex-wrap cls-items-center">
-            <h3 className="modal-title">پیش نمایش فایل</h3>
-            <button className="cls-w-fit cls-mr-auto" onClick={close}>
-              <XIcon className="cls-fill-[#919191] cls-w-4 cls-h-4" />
-            </button>
-          </div>
+        <Typography className="text-lg font-semibold">
+          پیش نمایش فایل
+        </Typography>
+        <CloseButton onClose={close} />
+      </DialogHeader>
 
-          <div className="cls-mt-[30px] cls-flex cls-justify-center">
-            <RenderIf isTrue={format === "image"}>
-              <img className="cls-w-full" src={source} alt={selectedFile?.name} />
-            </RenderIf>
-            <RenderIf isTrue={format === "video"}>
-              <video className="cls-w-full" controls>
-                <source src={source} type="video/mp4" />
-                مرورگر شما از ویدئو پشتیبانی نمیکند
-              </video>
-            </RenderIf>
-            <RenderIf isTrue={format === "sound"}>
-              <audio className="cls-w-full" controls>
-                <source src={source} type="audio/mpeg" />
-                مرورگر شما از صدا پشتیبانی نمیکند
-              </audio>
-            </RenderIf>
-            <RenderIf isTrue={format === "notSupported"}>
-              <p className="cls-mb-4">فرمت مورد نظر فاقد پیش نمایش میباشد</p>
-            </RenderIf>
-          </div>
+      <DialogBody placeholder="" className="p-0">
+        <div className="flex justify-center items-center min-h-[400px] bg-gray-50">
+          <RenderIf isTrue={format === "image"}>
+            <img 
+              className="max-w-full max-h-[400px] object-contain" 
+              src={source} 
+              alt={selectedFile?.name} 
+            />
+          </RenderIf>
+          <RenderIf isTrue={format === "video"}>
+            <video className="max-w-full max-h-[400px]" controls>
+              <source src={source} type="video/mp4" />
+              مرورگر شما از ویدئو پشتیبانی نمیکند
+            </video>
+          </RenderIf>
+          <RenderIf isTrue={format === "sound"}>
+            <audio className="w-full" controls>
+              <source src={source} type="audio/mpeg" />
+              مرورگر شما از صدا پشتیبانی نمیکند
+            </audio>
+          </RenderIf>
+          <RenderIf isTrue={format === "notSupported"}>
+            <div className="text-center p-8">
+              <Typography className="text-gray-500 mb-4">
+                فرمت مورد نظر فاقد پیش نمایش میباشد
+              </Typography>
+              <Typography className="text-sm text-gray-400">
+                نام فایل: {selectedFile?.name}
+              </Typography>
+            </div>
+          </RenderIf>
         </div>
-      </div>
-    </div>
+      </DialogBody>
+    </Dialog>
   );
 };
 

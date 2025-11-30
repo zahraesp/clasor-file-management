@@ -177,37 +177,37 @@ export const UploadFileIcon = (props: IProps) => {
       <path
         d="M15.0021 8.83235V7.02159C15.0021 6.57974 14.8262 6.1554 14.5136 5.84277L12.1559 3.48512C11.8433 3.17249 11.4189 2.99658 10.9771 2.99658H4.99793C4.07671 2.99658 3.33057 3.74273 3.33057 4.66394V16.3355C3.33057 17.2567 4.07671 18.0028 4.99793 18.0028H8.33265"
         stroke="#181C20"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M15.0021 7.16498H11.6674C11.2072 7.16498 10.8337 6.7915 10.8337 6.3313V2.99658"
         stroke="#181C20"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M13.7516 18.8366C11.6799 18.8366 10 17.1568 10 15.0851C10 13.0134 11.6799 11.3335 13.7516 11.3335C15.8241 11.3335 17.5031 13.0134 17.5031 15.0851C17.5031 17.1568 15.8241 18.8366 13.7516 18.8366"
         stroke="#181C20"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M13.7516 13.5884V16.5805"
         stroke="#181C20"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M15.2479 15.0848H12.2559"
         stroke="#181C20"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -296,7 +296,7 @@ export const FolderEmptyIcon = (props: IProps) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_2129_98472)">
+      <g clipPath="url(#clip0_2129_98472)">
         <mask
           id="mask0_2129_98472"
           maskUnits="userSpaceOnUse"
@@ -333,7 +333,7 @@ export const FolderEmptyIcon = (props: IProps) => {
           <path
             d="M113.125 47.5002L132.95 52.5503C136.162 53.3628 138.125 56.6503 137.325 59.8878L126.35 104.288L113.125 47.5002Z"
             fill="url(#paint2_linear_2129_98472)"
-            fill-opacity="0.6"
+            fillOpacity="0.6"
           />
           <path
             d="M71.1497 50.8877L64.5497 52.5502C61.3372 53.3627 59.3747 56.6502 60.1747 59.8877L71.1497 104.288V50.8877Z"
@@ -342,7 +342,7 @@ export const FolderEmptyIcon = (props: IProps) => {
           <path
             d="M71.1497 50.8877L64.5497 52.5502C61.3372 53.3627 59.3747 56.6502 60.1747 59.8877L71.1497 104.288V50.8877Z"
             fill="url(#paint3_linear_2129_98472)"
-            fill-opacity="0.6"
+            fillOpacity="0.6"
           />
           <path
             d="M126.351 60.5003V108.475C126.351 111.812 123.676 114.525 120.351 114.525H77.1504C73.8379 114.525 71.1504 111.812 71.1504 108.475V47.9253C71.1504 44.5753 73.8379 41.8628 77.1504 41.8628H107.801C109.751 42.0878 111.576 42.9753 112.963 44.3878L123.876 55.4003C125.251 56.7753 126.113 58.5753 126.351 60.5003Z"
@@ -365,9 +365,9 @@ export const FolderEmptyIcon = (props: IProps) => {
           <path
             d="M81.5117 75.2625C82.6992 68.425 85.9617 63.075 90.3992 58.975C94.6742 55.025 103.124 50.1375 106.599 56.6125C108.987 61.0625 106.274 69.2125 101.699 69.5625C97.3867 69.8875 92.6867 54.125 98.4242 44.2375C99.3867 42.575 101.024 40.625 102.674 39.0625"
             stroke="#B096D6"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-            stroke-dasharray="2 3"
+            strokeMiterlimit="10"
+            strokeLinecap="round"
+            strokeDasharray="2 3"
           />
           <path
             d="M59.3871 63.4753H55.3121C54.2746 61.3378 52.0871 59.8628 49.5496 59.8628C46.2996 59.8628 43.6121 62.3003 43.2121 65.4378H41.1121C38.4121 65.4378 36.2246 67.6253 36.2246 70.3253H66.2246C66.2246 66.5378 63.1621 63.4878 59.3871 63.4878V63.4753Z"
@@ -383,9 +383,9 @@ export const FolderEmptyIcon = (props: IProps) => {
           width="153.762"
           height="137.562"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -404,9 +404,9 @@ export const FolderEmptyIcon = (props: IProps) => {
           width="63.1992"
           height="21.2625"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend
             mode="normal"
             in="SourceGraphic"
@@ -426,8 +426,8 @@ export const FolderEmptyIcon = (props: IProps) => {
           y2="15.4875"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="white" />
-          <stop offset="1" stop-color="#E9E2F2" />
+          <stop stopColor="white" />
+          <stop offset="1" stopColor="#E9E2F2" />
         </linearGradient>
         <radialGradient
           id="paint1_radial_2129_98472"
@@ -437,8 +437,8 @@ export const FolderEmptyIcon = (props: IProps) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(98.6648 104.018) scale(81.9695 31.405)"
         >
-          <stop offset="0.189313" stop-color="#BBA7DB" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop offset="0.189313" stopColor="#BBA7DB" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint2_linear_2129_98472"
@@ -448,8 +448,8 @@ export const FolderEmptyIcon = (props: IProps) => {
           y2="76.9003"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#B49ED8" />
-          <stop offset="1" stop-color="#B49ED8" stop-opacity="0" />
+          <stop stopColor="#B49ED8" />
+          <stop offset="1" stopColor="#B49ED8" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_2129_98472"
@@ -459,8 +459,8 @@ export const FolderEmptyIcon = (props: IProps) => {
           y2="77.5877"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#B49ED8" stop-opacity="0" />
-          <stop offset="1" stop-color="#B49ED8" />
+          <stop stopColor="#B49ED8" stopOpacity="0" />
+          <stop offset="1" stopColor="#B49ED8" />
         </linearGradient>
         <radialGradient
           id="paint4_radial_2129_98472"
@@ -470,8 +470,8 @@ export const FolderEmptyIcon = (props: IProps) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(118.037 50.1253) scale(22.2125 22.2125)"
         >
-          <stop offset="0.18" stop-color="#E9E2F2" />
-          <stop offset="0.77" stop-color="white" />
+          <stop offset="0.18" stopColor="#E9E2F2" />
+          <stop offset="0.77" stopColor="white" />
         </radialGradient>
         <linearGradient
           id="paint5_linear_2129_98472"
@@ -481,13 +481,27 @@ export const FolderEmptyIcon = (props: IProps) => {
           y2="55.3128"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DCD3EA" />
-          <stop offset="1" stop-color="#CBBDE0" />
+          <stop stopColor="#DCD3EA" />
+          <stop offset="1" stopColor="#CBBDE0" />
         </linearGradient>
         <clipPath id="clip0_2129_98472">
           <rect width="200" height="150" fill="white" />
         </clipPath>
       </defs>
+    </svg>
+  );
+};
+
+export const GlobeIcon = (props: IProps) => {
+  const { className } = props;
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 22C9.34784 22 6.80429 20.9465 4.92892 19.0711C3.05356 17.1957 2 14.6522 2 12C2 9.34784 3.05356 6.80432 4.92892 4.92896C6.80429 3.05359 9.34784 2 12 2C13.3132 2 14.6136 2.25868 15.8268 2.76123C17.0401 3.26378 18.1425 4.00037 19.0711 4.92896C19.9997 5.85754 20.7363 6.9599 21.2388 8.17316C21.7413 9.38641 22 10.6868 22 12C22 13.3132 21.7413 14.6136 21.2388 15.8268C20.7363 17.0401 19.9997 18.1425 19.0711 19.0711C18.1425 19.9997 17.0401 20.7363 15.8268 21.2388C14.6136 21.7413 13.3132 22 12 22ZM19.9373 11C19.7165 9.247 18.9195 7.60577 17.6569 6.34314C16.9294 5.61564 16.0762 5.04272 15.1483 4.64554C15.9318 6.3255 16.3809 8.62474 16.4793 11H19.9373ZM16.4799 13H19.9373C19.7165 14.753 18.9195 16.3942 17.6569 17.6569C16.936 18.3778 16.0917 18.9469 15.1736 19.3436C15.9491 17.6646 16.3846 15.3701 16.4799 13ZM14.4789 11C14.2845 6.45812 12.7936 4 12 4C11.2065 4 9.71586 6.46621 9.52116 11H14.4789ZM7.52068 13C7.61913 15.3753 8.06823 17.6745 8.85168 19.3545C7.92384 18.9573 7.07064 18.3844 6.34314 17.6569C5.08051 16.3942 4.28353 14.753 4.06272 13H7.52068ZM7.52068 11C7.61913 8.62474 8.06823 6.3255 8.85168 4.64554C7.92384 5.04272 7.07064 5.61564 6.34314 6.34314C5.08051 7.60577 4.28353 9.247 4.06272 11H7.52068ZM9.52116 13H14.4789C14.2845 17.5419 12.7936 20 12 20C11.2065 20 9.71586 17.5338 9.52116 13Z"
+        fill="currentColor;"
+      />
     </svg>
   );
 };

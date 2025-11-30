@@ -4,6 +4,7 @@ import {
   DownloadIcon,
   FillArrow,
   FolderIcon,
+  GlobeIcon,
   MoreDotIcon,
   PencilIcon,
   TrashIcon,
@@ -17,6 +18,7 @@ import RenderIf from "../extra/renderIf";
 import ProgressBar from "../extra/progressBar";
 import { useInView } from "react-intersection-observer";
 import EmptyList from "./emptyList";
+import PublicFile from "./publicFile";
 
 export interface ITableProps {
   dataReport?: IReport;
@@ -37,8 +39,13 @@ export interface ITableProps {
   onSelectFolder?: (folder: IFolder) => void;
   onRenameFile?: (file: IFile, newName: string) => void;
   onDeleteFile?: (file: IFile) => void;
+  onPublicFile?: (file: IFile) => void;
   generateDownloadLink?: (file: IFile) => string;
   onFetchNextPage?: (hasNextPage?: boolean) => void;
+  getDataType?: (params: {
+    order: "NAME" | "CREATED" | "UPDATED" | "SIZE" | "TYPE" | null;
+    isDesc: boolean;
+  }) => void;
 }
 
 const TableMode = (props: ITableProps) => {
@@ -53,8 +60,10 @@ const TableMode = (props: ITableProps) => {
     onSelectFolder,
     onRenameFile,
     onDeleteFile,
+    onPublicFile,
     generateDownloadLink,
     onFetchNextPage,
+    getDataType,
   } = props;
 
   const [selectedFile, setSelectedFile] = useState<IFile>();
@@ -64,6 +73,7 @@ const TableMode = (props: ITableProps) => {
   const { ref, inView } = useInView();
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openPublicDialog, setOpenPublicDialog] = useState(false);
   const [fileMenu, setFileMenu] = useState<IFile | null>(null);
 
   const fileConut = files?.pages[0].count;
@@ -124,7 +134,10 @@ const TableMode = (props: ITableProps) => {
                       <button
                         className="btn-up !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
                         onClick={() => {
-                          // return setSortByName(-1);
+                          return getDataType?.({
+                            order: "NAME",
+                            isDesc: false,
+                          });
                         }}
                       >
                         <FillArrow className="cls-w-[9px] cls-h-[9px] cls-fill-[#B9B9B9]" />
@@ -132,7 +145,7 @@ const TableMode = (props: ITableProps) => {
                       <button
                         className="btn-down !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
                         onClick={() => {
-                          // return setSortByName(1);
+                          return getDataType?.({ order: "NAME", isDesc: true });
                         }}
                       >
                         <FillArrow className="cls-w-[9px] cls-h-[9px] cls-fill-[#B9B9B9] cls-rotate-180" />
@@ -140,16 +153,60 @@ const TableMode = (props: ITableProps) => {
                     </div>
                   </div>
                 </th>
-                <th className="!cls-bg-[#F2F2F7] cls-px-5 cls-py-1 cls h-10 cls-sticky cls-top-0 cls-z-10">
+                <th className="!cls-bg-[#F2F2F7] cls-px-5 cls-py-1 cls h-10 cls-sticky cls-top-0 cls-z-10 !cls-max-w-[150px] !cls-w-[150px]">
                   <div className="cls-flex">
                     <span className="cls-block">تاریخ بارگذاری</span>
+                    <div className="cls-flex cls-flex-col cls-items-center cls-mr-[11px]">
+                      <button
+                        className="btn-up !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
+                        onClick={() => {
+                          return getDataType?.({
+                            order: "CREATED",
+                            isDesc: false,
+                          });
+                        }}
+                      >
+                        <FillArrow className="cls-w-[9px] cls-h-[9px] cls-fill-[#B9B9B9]" />
+                      </button>
+                      <button
+                        className="btn-down !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
+                        onClick={() => {
+                          return getDataType?.({
+                            order: "CREATED",
+                            isDesc: true,
+                          });
+                        }}
+                      >
+                        <FillArrow className="cls-w-[9px] cls-h-[9px] cls-fill-[#B9B9B9] cls-rotate-180" />
+                      </button>
+                    </div>
                   </div>
                 </th>
-                <th className="!cls-bg-[#F2F2F7] cls-px-5 cls-py-1 cls h-10 cls-sticky cls-top-0 cls-z-10">
-                  <div className="flex justify-center">حجم</div>
+                <th className="!cls-bg-[#F2F2F7] cls-px-5 cls-py-1 cls h-10 cls-sticky cls-top-0 cls-z-10 !cls-max-w-[130px] !cls-w-[130px]">
+                  <div className="cls-flex cls-justify-center">
+                    <span className="cls-block">حجم</span>
+                    <div className="cls-flex cls-flex-col cls-items-center cls-mr-[11px]">
+                      <button
+                        className="btn-up !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
+                        onClick={() => {
+                          return getDataType?.({ order: "SIZE", isDesc: false });
+                        }}
+                      >
+                        <FillArrow className="cls-w-[9px] cls-h-[9px] cls-fill-[#B9B9B9]" />
+                      </button>
+                      <button
+                        className="btn-down !cls-p-0 cls-bg-transparent hover:cls-bg-transparent"
+                        onClick={() => {
+                          return getDataType?.({ order: "SIZE", isDesc: true });
+                        }}
+                      >
+                        <FillArrow className="cls-w-[9px] cls-h-[9px] cls-fill-[#B9B9B9] cls-rotate-180" />
+                      </button>
+                    </div>
+                  </div>
                 </th>
-                <th className="!cls-bg-[#F2F2F7] cls-px-5 cls-py-1 cls h-10 file-action cls-sticky cls-top-0 cls-z-10">
-                  عملیات
+                <th className="!cls-bg-[#F2F2F7] cls-px-5 cls-py-1 cls h-10 file-action cls-sticky cls-top-0 cls-z-10 !cls-max-w-[80px] !cls-w-[80px]">
+                  <span className="cls-block">عملیات</span>
                 </th>
               </tr>
             </thead>
@@ -187,7 +244,10 @@ const TableMode = (props: ITableProps) => {
                           >
                             <td>
                               <div className="cls-flex cls-items-center">
-                                <div className="cls-w-8 cls-h-8 cls-min-w-8 cls-max-w-8 cls-flex">
+                                <div
+                                  className="cls-w-8 cls-h-8 cls-min-w-8 cls-max-w-8 cls-flex"
+                                  title={item.name}
+                                >
                                   {!isFolder(item) ? (
                                     <FileIcon
                                       extension={item.extension}
@@ -256,14 +316,14 @@ const TableMode = (props: ITableProps) => {
                                       <RenderIf isTrue={!!link}>
                                         <li className="active:!cls-bg-transparent px-1">
                                           <a
-                                            className="!cls-text-[#667585] !cls-text-[12px] active:!cls-bg-transparent cls-pl-0"
+                                            className="!cls-text-[#667585] !cls-text-[12px] active:!cls-bg-transparent cls-px-[1px]"
                                             href={link}
                                             download
                                             onClick={(e) => {
                                               e.stopPropagation();
                                             }}
                                           >
-                                            <div className="cls-flex cls-items-center cls-gap-2 cls-pl-0">
+                                            <div className="cls-flex cls-items-center cls-gap-2 cls-px-[1px]">
                                               <DownloadIcon className="cls-h-5 cls-w-5 cls-stroke-[#667585]" />
                                               <p className="!cls-text-[#667585] cls-font-yekan-medium !cls-text-[12px]">
                                                 دانلود فایل
@@ -272,9 +332,28 @@ const TableMode = (props: ITableProps) => {
                                           </a>
                                         </li>
                                       </RenderIf>
+                                      {onPublicFile ? (
+                                        <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
+                                          <div
+                                            className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
+                                            role="button"
+                                            tabIndex={0}
+                                            onClick={(event) => {
+                                              event.stopPropagation();
+                                              setOpenPublicDialog(true);
+                                              setFileMenu(item);
+                                            }}
+                                          >
+                                            <GlobeIcon className="dialog-content__button-icon cls-h-5 cls-w-5 cls-fill-[#667585]" />
+                                            <p className="!cls-text-[#667585] cls-font-yekan-medium cls-text-[12px] cls-truncate">
+                                              عمومی کردن فایل
+                                            </p>
+                                          </div>
+                                        </li>
+                                      ) : null}
                                       <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
                                         <div
-                                          className="cls-flex cls-items-center cls-gap-2 cls-pl-0"
+                                          className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
                                           role="button"
                                           tabIndex={0}
                                           onClick={(event) => {
@@ -291,7 +370,7 @@ const TableMode = (props: ITableProps) => {
                                       </li>
                                       <li className="!cls-text-[#667585] active:!cls-bg-transparent ">
                                         <div
-                                          className="cls-flex cls-items-center cls-gap-2 cls-pl-0"
+                                          className="cls-flex cls-items-center cls-gap-2 cls-px-[1px] active:!cls-bg-transparent"
                                           role="button"
                                           tabIndex={0}
                                           onClick={(event) => {
@@ -383,6 +462,17 @@ const TableMode = (props: ITableProps) => {
           isLoading={isLoading}
           handleClose={() => {
             setOpenDeleteDialog(false);
+          }}
+        />
+      )}
+      {openPublicDialog && fileMenu && (
+        <PublicFile
+          key={fileMenu.hash}
+          fileInfo={fileMenu}
+          onPublicFile={onPublicFile}
+          isLoading={isLoading}
+          handleClose={() => {
+            setOpenPublicDialog(false);
           }}
         />
       )}
